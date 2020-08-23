@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CardsForBoardGame</string>
+    <string name="enter_the_name_of_card">Enter the name of card</string>
+    <string name="title">Title:</string>
+    <string name="description">Description:</string>
+    <string name="description_of_card">Description of card</string>
+    <string name="save">Save</string>
+    <string name="close">Close</string>
+    <string name="load_image_from_gallery">Load image from gallery</string>
+</resources>
