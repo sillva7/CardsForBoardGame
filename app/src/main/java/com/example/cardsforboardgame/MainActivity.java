@@ -2,6 +2,7 @@ package com.example.cardsforboardgame;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +12,17 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.example.cardsforboardgame.Classes.Card;
+import com.example.cardsforboardgame.DBStuf.MainViewModel;
+import com.example.cardsforboardgame.Utils.BitmapConverter;
 import com.github.chrisbanes.photoview.PhotoViewAttacher;
 
 import java.io.File;
@@ -27,9 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Button setImgBtn;
     private ImageView imageViewOfCard;
-    private SubsamplingScaleImageView scaleImageView;
     private final int Pick_image = 1;
-    private PhotoViewAttacher attacher;
+    private byte[] byteForImg;
+    private MainViewModel viewModel;
+    EditText titleET, descriptionET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +46,11 @@ public class MainActivity extends AppCompatActivity {
         setImgBtn = findViewById(R.id.button);
         imageViewOfCard = findViewById(R.id.imageView);
 
-        attacher = new PhotoViewAttacher(imageViewOfCard);
+        byteForImg = null;
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        titleET = findViewById(R.id.titleET);
+        descriptionET = findViewById(R.id.descriptionET);
 
 
     }
@@ -65,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         String s = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        byteForImg = BitmapConverter.getBytes(selectedImage);
                         imageViewOfCard.setImageBitmap(selectedImage);
 
                         setImgBtn.setText(s);
@@ -76,10 +88,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     public String getRealPathFromURI(Uri uri) {//для настоящего названия пути картинки
-        String[] projection = { MediaStore.Images.Media.DATA };
+        String[] projection = {MediaStore.Images.Media.DATA};
         @SuppressWarnings("deprecation")
         Cursor cursor = managedQuery(uri, projection, null, null, null);
         int column_index = cursor
@@ -89,5 +99,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    public void save(View view) {
+        Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), byteForImg);
+        viewModel.insertCard(card);
+        Log.d("494949", "save: " +viewModel.getCardById(1).getTitle());
+        Intent intent = new Intent(MainActivity.this, Test.class);
+        intent.putExtra("id", card.getId());
+        //startActivity(intent);
+    }
 }

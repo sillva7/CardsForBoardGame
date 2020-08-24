@@ -94,6 +94,8 @@
             >
 
             <Button
+                android:id="@+id/save"
+                android:onClick="save"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
