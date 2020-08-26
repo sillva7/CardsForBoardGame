@@ -29,7 +29,28 @@ public class MainViewModel extends AndroidViewModel {
         return cards;
     }
 
-    private static class GetCardTask extends AsyncTask<Integer, Void, Card> {
+    private static class GetCardTask extends AsyncTask<String, Void, Card> {
+        @Override
+        protected Card doInBackground(String... string) {
+            if (string != null && string.length > 0) {
+                return database.cardDao().getCardByTitle(string[0]);
+            }
+            return null;
+        }
+    }
+
+    public Card getCardByTitle(String title) {
+        try {
+            return new GetCardTask().execute(title).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static class GetCardTaskById extends AsyncTask<Integer, Void, Card> {
         @Override
         protected Card doInBackground(Integer... integers) {
             if (integers != null && integers.length > 0) {
@@ -41,7 +62,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public Card getCardById(int id) {
         try {
-            return new GetCardTask().execute(id).get();
+            return new GetCardTaskById().execute(id).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -63,7 +84,7 @@ public class MainViewModel extends AndroidViewModel {
         new DeleteAllCardsTask().execute();
     }
 
-    private static class DeleteCardByIdTask extends AsyncTask<Card, Void, Void> {
+    private static class DeleteCardByTask extends AsyncTask<Card, Void, Void> {
 
         @Override
         protected Void doInBackground(Card... cards) {
@@ -74,8 +95,8 @@ public class MainViewModel extends AndroidViewModel {
         }
     }
 
-    public void deleteCardById(Card card) {
-        new DeleteCardByIdTask().execute(card);
+    public void deleteCard(Card card) {
+        new DeleteCardByTask().execute(card);
     }
 
     private static class InsertCardTask extends AsyncTask<Card, Void, Void> {

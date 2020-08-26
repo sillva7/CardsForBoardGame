@@ -18,6 +18,9 @@ public interface CardDao {
     LiveData<List<Card>> getAllCards();
 
 
+    @Query("SELECT * FROM cards WHERE title == :cardTitle")
+    Card getCardByTitle(String cardTitle);
+
     @Query("SELECT * FROM cards WHERE id == :cardId")
     Card getCardById(int cardId);
 

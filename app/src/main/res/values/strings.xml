@@ -7,4 +7,5 @@
     <string name="save">Save</string>
     <string name="close">Close</string>
     <string name="load_image_from_gallery">Load image from gallery</string>
+    <string name="reveal">Reveal</string>
 </resources>

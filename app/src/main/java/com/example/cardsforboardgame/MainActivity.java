@@ -2,6 +2,8 @@ package com.example.cardsforboardgame;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -28,6 +30,8 @@ import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private byte[] byteForImg;
     private MainViewModel viewModel;
     EditText titleET, descriptionET;
+    ArrayList<Card> cardList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,30 @@ public class MainActivity extends AppCompatActivity {
 
         titleET = findViewById(R.id.titleET);
         descriptionET = findViewById(R.id.descriptionET);
+
+        LiveData<List<Card>> cardsFromListData = viewModel.getCards();
+        cardList = new ArrayList();
+        cardsFromListData.observe(this, new Observer<List<Card>>() {
+            @Override
+            public void onChanged(List<Card> cards) {
+
+                // Log.d("494949", "onChanged: "+cards.get(0));
+                cardList.addAll(cards);
+                Log.d("565656", "onChanged: " + cards.toString());
+                Log.d("565656", "onChanged: " + cards.size());
+                if (cards.size() > 0) {
+                    for (int i = 0; i < cards.size(); i++) {
+                        Log.d("565656", "onChanged: from list: " + cards.get(i).getTitle());
+                        Log.d("565656", "onChanged: from viewModel: " +
+                                viewModel.getCardByTitle(cards.get(i).getTitle()).getTitle() +
+                                " viewModel " + viewModel.getCardByTitle(cards.get(i).getTitle()).getId());
+                    }
+
+                }
+
+
+            }
+        });
 
 
     }
@@ -76,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
                         String s = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        Log.d("666", "onActivityResult: " + selectedImage.toString());
                         byteForImg = BitmapConverter.getBytes(selectedImage);
+                        Log.d("666", "onActivityResult: " + BitmapConverter.getImage(byteForImg).toString());
                         imageViewOfCard.setImageBitmap(selectedImage);
 
                         setImgBtn.setText(s);
@@ -102,9 +133,13 @@ public class MainActivity extends AppCompatActivity {
     public void save(View view) {
         Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), byteForImg);
         viewModel.insertCard(card);
-        Log.d("494949", "save: " +viewModel.getCardById(1).getTitle());
-        Intent intent = new Intent(MainActivity.this, Test.class);
-        intent.putExtra("id", card.getId());
-        //startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, Testt.class);
+        intent.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());//сюда надо добавлять ID взятый из БД, а не из поля только что созданного объекта!!!!
+        startActivity(intent);
+
+    }
+
+    public void reveal(View view) {
+        viewModel.deleteAllCards();
     }
 }
