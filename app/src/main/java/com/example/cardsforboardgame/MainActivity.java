@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     EditText titleET, descriptionET;
     ArrayList<Card> cardList;
+    Bitmap bitmap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setImgBtn = findViewById(R.id.button);
         imageViewOfCard = findViewById(R.id.imageView);
 
-        byteForImg = null;
+        bitmap = null;
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         titleET = findViewById(R.id.titleET);
@@ -59,23 +61,22 @@ public class MainActivity extends AppCompatActivity {
 
         LiveData<List<Card>> cardsFromListData = viewModel.getCards();
         cardList = new ArrayList();
-        cardsFromListData.observe(this, new Observer<List<Card>>() {
+        cardsFromListData.observe(this, new Observer<List<Card>>() {//для вытаскивания списка из LiveData
             @Override
             public void onChanged(List<Card> cards) {
 
-                // Log.d("494949", "onChanged: "+cards.get(0));
                 cardList.addAll(cards);
-                Log.d("565656", "onChanged: " + cards.toString());
-                Log.d("565656", "onChanged: " + cards.size());
-                if (cards.size() > 0) {
-                    for (int i = 0; i < cards.size(); i++) {
-                        Log.d("565656", "onChanged: from list: " + cards.get(i).getTitle());
-                        Log.d("565656", "onChanged: from viewModel: " +
-                                viewModel.getCardByTitle(cards.get(i).getTitle()).getTitle() +
-                                " viewModel " + viewModel.getCardByTitle(cards.get(i).getTitle()).getId());
-                    }
-
-                }
+//                Log.d("565656", "onChanged: " + cards.toString());
+//                Log.d("565656", "onChanged: " + cards.size());
+//                if (cards.size() > 0) {
+//                    for (int i = 0; i < cards.size(); i++) {
+//                        Log.d("565656", "onChanged: from list: " + cards.get(i).getTitle());
+//                        Log.d("565656", "onChanged: from viewModel: " +
+//                                viewModel.getCardByTitle(cards.get(i).getTitle()).getTitle() +
+//                                " viewModel " + viewModel.getCardByTitle(cards.get(i).getTitle()).getId());
+//                    }
+//
+//                }
 
 
             }
@@ -105,11 +106,12 @@ public class MainActivity extends AppCompatActivity {
                         String s = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        Log.d("666", "onActivityResult: " + selectedImage.toString());
-                        byteForImg = BitmapConverter.getBytes(selectedImage);
-                        Log.d("666", "onActivityResult: " + BitmapConverter.getImage(byteForImg).toString());
-                        imageViewOfCard.setImageBitmap(selectedImage);
+                        byte[] bytes = BitmapConverter.getBytes(selectedImage);
 
+                        bitmap = selectedImage;
+
+                        imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение
+                        //imageViewOfCard.setImageURI(imageUri);//изображение загружается из памяти телефона
                         setImgBtn.setText(s);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void save(View view) {
-        Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), byteForImg);
+        Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), bitmap);
         viewModel.insertCard(card);
         Intent intent = new Intent(MainActivity.this, Testt.class);
         intent.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());//сюда надо добавлять ID взятый из БД, а не из поля только что созданного объекта!!!!

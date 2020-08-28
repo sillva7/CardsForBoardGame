@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,5 +32,7 @@ public class Testt extends AppCompatActivity {
 
         tvt.setText(viewModel.getCardById(id).getTitle());
         tvd.setText(viewModel.getCardById(id).getDescrption());
+
+        iv.setImageBitmap(viewModel.getCardById(id).getBitmap());
     }
 }

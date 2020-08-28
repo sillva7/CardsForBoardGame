@@ -1,8 +1,13 @@
 package com.example.cardsforboardgame.Classes;
 
+import android.graphics.Bitmap;
+
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.cardsforboardgame.Utils.BitmapConverter;
 
 @Entity(tableName = "cards")
 public class Card {
@@ -11,13 +16,14 @@ public class Card {
     int id;
     String title;
     String descrption;
-    byte[] bytesForImg;
+    @TypeConverters({BitmapConverter.class})
+    Bitmap bitmap;
 
-    public Card(int id, String title, String descrption, byte[] bytesForImg) {
+    public Card(int id, String title, String descrption, Bitmap bitmap) {
         this.id = id;
         this.title = title;
         this.descrption = descrption;
-        this.bytesForImg = bytesForImg;
+        this.bitmap = bitmap;
     }
 
     @Ignore
@@ -28,10 +34,10 @@ public class Card {
 
     @Ignore
 
-    public Card(String title, String descrption, byte[] bytesForImg) {
+    public Card(String title, String descrption, Bitmap bitmap) {
         this.title = title;
         this.descrption = descrption;
-        this.bytesForImg = bytesForImg;
+        this.bitmap = bitmap;
     }
 
     public int getId() {
@@ -58,11 +64,12 @@ public class Card {
         this.descrption = descrption;
     }
 
-    public byte[] getBytesForImg() {
-        return bytesForImg;
+    public Bitmap getBitmap() {
+        return bitmap;
     }
 
-    public void setBytesForImg(byte[] bytesForImg) {
-        this.bytesForImg = bytesForImg;
+    public void setBitmap(Bitmap bitmap)
+    {
+        this.bitmap = bitmap;
     }
 }

@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.cardsforboardgame.Classes.Card;
 
 
-@Database(entities = {Card.class}, version = 1, exportSchema = false)
+@Database(entities = {Card.class}, version = 2, exportSchema = false)
 public abstract class CardDB extends RoomDatabase {
 
     private static final String DB_NAME = "movies.db";
