@@ -59,26 +59,12 @@ public class AddNewCardActivity extends AppCompatActivity {
         titleET = findViewById(R.id.titleET);
         descriptionET = findViewById(R.id.descriptionET);
 
-        LiveData<List<Card>> cardsFromListData = viewModel.getCards();
         cardList = new ArrayList();
+        LiveData<List<Card>> cardsFromListData = viewModel.getCards();
         cardsFromListData.observe(this, new Observer<List<Card>>() {//для вытаскивания списка из LiveData
             @Override
             public void onChanged(List<Card> cards) {
-
                 cardList.addAll(cards);
-//                Log.d("565656", "onChanged: " + cards.toString());
-//                Log.d("565656", "onChanged: " + cards.size());
-//                if (cards.size() > 0) {
-//                    for (int i = 0; i < cards.size(); i++) {
-//                        Log.d("565656", "onChanged: from list: " + cards.get(i).getTitle());
-//                        Log.d("565656", "onChanged: from viewModel: " +
-//                                viewModel.getCardByTitle(cards.get(i).getTitle()).getTitle() +
-//                                " viewModel " + viewModel.getCardByTitle(cards.get(i).getTitle()).getId());
-//                    }
-//
-//                }
-
-
             }
         });
 

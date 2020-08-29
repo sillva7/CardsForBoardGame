@@ -18,6 +18,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addNewCard=findViewById(R.id.addNewCard);
+
+        toAllCards = findViewById(R.id.allCardsBtn);
+        toAllCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AllCardsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void toAddNewCard(View view) {
