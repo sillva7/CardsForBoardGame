@@ -8,4 +8,11 @@
     <string name="close">Close</string>
     <string name="load_image_from_gallery">Load image from gallery</string>
     <string name="reveal">Reveal</string>
+    <string name="add_new_card">Add new card</string>
+    <string name="show_all_cards">Show all cards</string>
+    <string name="add_new_pool">Add new pool</string>
+    <string name="show_all_pools">Show all pools</string>
+    <string name="NeedTitle">Need a title</string>
+    <string name="NeedDescription">Need description</string>
+    <string name="ImageIsEmpty">Set an image</string>
 </resources>

@@ -1,39 +1,39 @@
-package com.example.cardsforboardgame;
+package com.example.cardsforboardgame.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.davemorrissey.labs.subscaleview.ImageSource;
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.cardsforboardgame.Classes.Card;
 import com.example.cardsforboardgame.DBStuf.MainViewModel;
+import com.example.cardsforboardgame.R;
+import com.example.cardsforboardgame.Testt;
 import com.example.cardsforboardgame.Utils.BitmapConverter;
-import com.github.chrisbanes.photoview.PhotoViewAttacher;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class AddNewCardActivity extends AppCompatActivity {
 
     private Button setImgBtn;
     private ImageView imageViewOfCard;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_new_card);
 
         setImgBtn = findViewById(R.id.button);
         imageViewOfCard = findViewById(R.id.imageView);
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                         String s = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        byte[] bytes = BitmapConverter.getBytes(selectedImage);
 
                         bitmap = selectedImage;
 
@@ -131,17 +130,49 @@ public class MainActivity extends AppCompatActivity {
         return cursor.getString(column_index);
     }
 
+//    private boolean hasImage(@NonNull ImageView view) {
+//        Drawable drawable = view.getDrawable();
+//        boolean hasImage = (drawable != null);
+//
+//        if (hasImage && (drawable instanceof BitmapDrawable)) {
+//            hasImage = ((BitmapDrawable)drawable).getBitmap() != null;
+//        }
+//
+//        return hasImage;
+//    }
+
+    private boolean isEmpty(EditText etText) {
+        if (etText.getText().toString().trim().length() > 0)
+            return false;
+
+        return true;
+    }
 
     public void save(View view) {
-        Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), bitmap);
-        viewModel.insertCard(card);
-        Intent intent = new Intent(MainActivity.this, Testt.class);
-        intent.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());//сюда надо добавлять ID взятый из БД, а не из поля только что созданного объекта!!!!
-        startActivity(intent);
+
+
+        if (isEmpty(titleET)) {
+            titleET.setError(getString(R.string.NeedTitle));
+            Toast.makeText(this, getString(R.string.NeedTitle), Toast.LENGTH_SHORT).show();
+        } else if (isEmpty(descriptionET)) {
+            descriptionET.setError(getString(R.string.NeedDescription));
+            Toast.makeText(this, getString(R.string.NeedDescription), Toast.LENGTH_SHORT).show();
+        } else if (bitmap == null) {
+            Toast.makeText(this, R.string.ImageIsEmpty, Toast.LENGTH_SHORT).show();
+        } else {
+            Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), bitmap);
+            viewModel.insertCard(card);
+            Intent intent = new Intent(AddNewCardActivity.this, Testt.class);
+            intent.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());//сюда надо добавлять ID взятый из БД, а не из поля только что созданного объекта!!!!
+            startActivity(intent);
+        }
+
 
     }
 
-    public void reveal(View view) {
-        viewModel.deleteAllCards();
+
+    public void close(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
