@@ -68,8 +68,21 @@ public class AddNewCardActivity extends AppCompatActivity {
             }
         });
 
-
+        Intent intent = getIntent();
+        int cardId = intent.getIntExtra("id",0);
+        if(cardId==0){
+            Toast.makeText(this, R.string.CreateNewCard, Toast.LENGTH_SHORT).show();
+            setImgBtn.setVisibility(View.VISIBLE);
+        }else{
+            titleET.setText(viewModel.getCardById(cardId).getTitle());
+            descriptionET.setText(viewModel.getCardById(cardId).getDescrption());
+            imageViewOfCard.setImageBitmap(viewModel.getCardById(cardId).getBitmap());
+            setImgBtn.setVisibility(View.GONE);
+        }
     }
+
+
+
 
 
     public void setImg(View view) {

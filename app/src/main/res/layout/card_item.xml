@@ -35,6 +35,18 @@
         app:layout_constraintStart_toEndOf="@id/imageViewCard"
         app:layout_constraintTop_toTopOf="@id/imageViewCard"
         app:layout_constraintVertical_bias="0.2" />
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCard"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCard"
+        android:scaleX="2.5"
+        android:scaleY="2.5"
+        android:visibility="gone"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

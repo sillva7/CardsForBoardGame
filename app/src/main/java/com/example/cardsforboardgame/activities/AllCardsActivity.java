@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.cardsforboardgame.Classes.Card;
@@ -28,6 +29,16 @@ public class AllCardsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_cards);
+
+
+        Intent intent = getIntent();
+        if (intent.getIntExtra("checkbox", 0) == 0) {//для отображения чекбокса
+            CardAdapter.checkbox = 0;
+        } else {
+            CardAdapter.checkbox = 1;
+        }
+
+
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         cards = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
@@ -42,5 +53,16 @@ public class AllCardsActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(cardAdapter);
+
+
+        cardAdapter.setOnCardClickListener(new CardAdapter.OnCardClickListener() {
+            @Override
+            public void onCardClick(int position) {
+                Card card = cardAdapter.getCards().get(position);
+                Intent intentForCardEdit = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
+                intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
+                startActivity(intentForCardEdit);
+            }
+        });
     }
 }

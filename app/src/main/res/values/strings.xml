@@ -15,4 +15,5 @@
     <string name="NeedTitle">Need a title</string>
     <string name="NeedDescription">Need description</string>
     <string name="ImageIsEmpty">Set an image</string>
+    <string name="CreateNewCard">Create new card</string>
 </resources>
