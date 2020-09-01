@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CardsForBoardGame</string>
-    <string name="enter_the_name_of_card">Enter the name of card</string>
+    <string name="enter_name_of_card">Name of card</string>
     <string name="title">Title:</string>
     <string name="description">Description:</string>
     <string name="description_of_card">Description of card</string>
@@ -16,4 +16,7 @@
     <string name="NeedDescription">Need description</string>
     <string name="ImageIsEmpty">Set an image</string>
     <string name="CreateNewCard">Create new card</string>
+    <string name="add_new_card_to_pool">Add new card to pool:</string>
+    <string name="add_new_card_to_pool_btn">+ Add New card</string>
+    <string name="save_to_pool">Save to pool</string>
 </resources>

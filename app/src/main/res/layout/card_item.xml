@@ -4,14 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="10dp"
-    app:cardCornerRadius="6dp"
-
-    >
+    android:layout_marginVertical="5dp"
+    app:cardCornerRadius="6dp">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:layout_margin="3dp">
 
     <ImageView
         android:id="@+id/imageViewCard"
@@ -26,26 +24,31 @@
         android:id="@+id/textViewCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:maxWidth="235dp"
         android:text="TEST"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/imageViewCard"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintStart_toEndOf="@id/imageViewCard"
         app:layout_constraintTop_toTopOf="@id/imageViewCard"
-        app:layout_constraintVertical_bias="0.2" />
+        />
+
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="80dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewCard"
         app:layout_constraintTop_toBottomOf="@+id/textViewCard"
-        android:scaleX="2.5"
-        android:scaleY="2.5"
-        android:visibility="gone"
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.9"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

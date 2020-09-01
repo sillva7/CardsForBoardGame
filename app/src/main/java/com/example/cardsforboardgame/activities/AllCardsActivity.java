@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.cardsforboardgame.Classes.Card;
 import com.example.cardsforboardgame.DBStuf.MainViewModel;
@@ -24,19 +26,34 @@ public class AllCardsActivity extends AppCompatActivity {
     CardAdapter cardAdapter;
     MainViewModel viewModel;
     ArrayList<Card> cards;
+    Button saveToPool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_cards);
-
+        saveToPool = findViewById(R.id.saveToPool);
 
         Intent intent = getIntent();
+        if (intent.getIntExtra("button", 0) == 0) {//на видимость кнопки для сохранения карточек в пул
+            saveToPool.setVisibility(View.GONE);
+        } else {
+            saveToPool.setVisibility(View.VISIBLE);
+        }
+
         if (intent.getIntExtra("checkbox", 0) == 0) {//для отображения чекбокса
             CardAdapter.checkbox = 0;
         } else {
             CardAdapter.checkbox = 1;
         }
+        saveToPool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (int i = 0; i < cards.size() - 1; i++) {
+                    ;
+                }
+            }
+        });
 
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -59,6 +76,7 @@ public class AllCardsActivity extends AppCompatActivity {
             @Override
             public void onCardClick(int position) {
                 Card card = cardAdapter.getCards().get(position);
+
                 Intent intentForCardEdit = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
                 intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
                 startActivity(intentForCardEdit);

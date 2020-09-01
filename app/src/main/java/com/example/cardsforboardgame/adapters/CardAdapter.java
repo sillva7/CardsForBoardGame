@@ -71,6 +71,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
         } else {
             checkBox.setVisibility(View.VISIBLE);
         }
+        checkBox.setChecked(true);
     }
 
     public CardAdapter() {
