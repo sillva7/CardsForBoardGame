@@ -18,6 +18,9 @@ public class Card {
     String descrption;
     @TypeConverters({BitmapConverter.class})
     Bitmap bitmap;
+    @Ignore
+    boolean isChecked = false;//переменная для мониторинга состояния чекбокса
+
 
     public Card(int id, String title, String descrption, Bitmap bitmap) {
         this.id = id;
@@ -33,11 +36,19 @@ public class Card {
     }
 
     @Ignore
-
     public Card(String title, String descrption, Bitmap bitmap) {
         this.title = title;
         this.descrption = descrption;
         this.bitmap = bitmap;
+    }
+
+    @Ignore
+    public boolean isChecked() {
+        return isChecked;
+    }
+    @Ignore
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public int getId() {

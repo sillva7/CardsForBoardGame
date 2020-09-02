@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.cardsforboardgame.Classes.Card;
 import com.example.cardsforboardgame.DBStuf.MainViewModel;
 import com.example.cardsforboardgame.R;
+import com.example.cardsforboardgame.Utils.BitmapConverter;
 import com.example.cardsforboardgame.adapters.CardAdapter;
 
 import java.util.ArrayList;
@@ -34,24 +37,28 @@ public class AllCardsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_cards);
         saveToPool = findViewById(R.id.saveToPool);
 
-        Intent intent = getIntent();
-        if (intent.getIntExtra("button", 0) == 0) {//на видимость кнопки для сохранения карточек в пул
+        final Intent intent = getIntent();
+        final int checkBoxAndBtn = intent.getIntExtra("checkbox", 0);
+
+
+        if (checkBoxAndBtn == 0) {//для отображения чекбокса и на видимость кнопки для сохранения карточек в пул
+            CardAdapter.checkbox = 0;
             saveToPool.setVisibility(View.GONE);
         } else {
-            saveToPool.setVisibility(View.VISIBLE);
-        }
-
-        if (intent.getIntExtra("checkbox", 0) == 0) {//для отображения чекбокса
-            CardAdapter.checkbox = 0;
-        } else {
             CardAdapter.checkbox = 1;
+            saveToPool.setVisibility(View.VISIBLE);
+
         }
-        saveToPool.setOnClickListener(new View.OnClickListener() {
+        saveToPool.setOnClickListener(new View.OnClickListener() {//сохранение в пул по нажатию этой кнопки
             @Override
             public void onClick(View view) {
-                for (int i = 0; i < cards.size() - 1; i++) {
-                    ;
+                String titleOfBtn="";
+                for (int i = 0; i < AddNewPool.cards.size(); i++) {
+                    titleOfBtn += (AddNewPool.cards.get(i).getTitle() + " ");
                 }
+                AddNewPool.addNewBtn.setText(titleOfBtn);
+                AllCardsActivity.this.finish();
+
             }
         });
 
@@ -72,14 +79,17 @@ public class AllCardsActivity extends AppCompatActivity {
         recyclerView.setAdapter(cardAdapter);
 
 
-        cardAdapter.setOnCardClickListener(new CardAdapter.OnCardClickListener() {
+        cardAdapter.setOnCardClickListener(new CardAdapter.OnCardClickListener() {//по клику переходим на страницу с карточкой и информацией о ней
             @Override
             public void onCardClick(int position) {
                 Card card = cardAdapter.getCards().get(position);
 
+
                 Intent intentForCardEdit = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
                 intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
                 startActivity(intentForCardEdit);
+
+
             }
         });
     }

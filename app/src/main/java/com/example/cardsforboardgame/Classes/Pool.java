@@ -7,6 +7,8 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.example.cardsforboardgame.Utils.BitmapConverter;
+
 import java.util.ArrayList;
 
 @Entity(tableName = "pools")
@@ -15,8 +17,9 @@ public class Pool {
     int id;
     String title;
     String description;
-    ArrayList<Card> cards;
     @TypeConverters({})//dont forget
+    ArrayList<Card> cards;
+    @TypeConverters({BitmapConverter.class})
     Bitmap bitmap;//for img
 
     public String getTitle() {

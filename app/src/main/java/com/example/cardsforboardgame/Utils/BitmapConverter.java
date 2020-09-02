@@ -5,7 +5,10 @@ import android.graphics.BitmapFactory;
 
 import androidx.room.TypeConverter;
 
+import com.example.cardsforboardgame.Classes.Card;
+
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class BitmapConverter {
     // из bitmap в byte[]

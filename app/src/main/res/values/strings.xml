@@ -17,6 +17,10 @@
     <string name="ImageIsEmpty">Set an image</string>
     <string name="CreateNewCard">Create new card</string>
     <string name="add_new_card_to_pool">Add new card to pool:</string>
-    <string name="add_new_card_to_pool_btn">+ Add New card</string>
+    <string name="add_new_card_to_pool_btn">Add new cards</string>
     <string name="save_to_pool">Save to pool</string>
+    <string name="choose_cards">Choose cards</string>
+    <string name="image_of_pool">Image of pool(optional):</string>
+    <string name="choose_picture">Choose picture</string>
+    <string name="save_this_pool">Save this pool</string>
 </resources>

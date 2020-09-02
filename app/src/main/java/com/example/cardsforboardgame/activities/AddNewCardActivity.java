@@ -93,7 +93,7 @@ public class AddNewCardActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//для загрузки с галереи изображения
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);//хм...а этот же метод можно было использовать и для выбора Карточек в пул, не так ли?...
 
         //Получаем URI изображения, преобразуем его в Bitmap
         //объект и отображаем в элементе ImageView нашего интерфейса:

@@ -1,17 +1,21 @@
 package com.example.cardsforboardgame.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cardsforboardgame.Classes.Card;
 import com.example.cardsforboardgame.R;
+import com.example.cardsforboardgame.Utils.BitmapConverter;
+import com.example.cardsforboardgame.activities.AddNewPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +63,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewViewHolder holder, int position) {
-        Card card = cards.get(position);
+    public void onBindViewHolder(@NonNull final CardViewViewHolder holder, int position) {
+        final Card card = cards.get(position);
         ImageView imageView = holder.imageView;
         TextView textView = holder.textView;
-        CheckBox checkBox = holder.checkBox;
+        final CheckBox checkBox = holder.checkBox;
+        checkBox.setChecked(card.isChecked());//отметка для установки чекбокса
         imageView.setImageBitmap(card.getBitmap());
         textView.setText(card.getTitle());
         if (checkbox == 0) {
@@ -71,7 +76,22 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
         } else {
             checkBox.setVisibility(View.VISIBLE);
         }
-        checkBox.setChecked(true);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkBox.isChecked()){//этот блок с ифом я нашёл вот в это подворотне shorturl.at/efryH ну, вернее идею в целом как отметить это чекбокс
+                    checkBox.setChecked(true);
+                    AddNewPool.cards.add(card);
+                    Log.d("666", "added: "+card.getTitle());
+                }else{
+                    checkBox.setChecked(false);
+                    AddNewPool.cards.remove(card);
+                    Log.d("666", "removed: "+card.getTitle());
+
+                }
+            }
+        });
+        //checkBox.setChecked(true); просто тестировал че делает этот метод. выставляет значение чкбкса на "отмечено"
     }
 
     public CardAdapter() {
