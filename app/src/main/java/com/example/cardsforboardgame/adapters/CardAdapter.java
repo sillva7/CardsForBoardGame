@@ -46,7 +46,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
         notifyDataSetChanged();
     }
 
-    public CardAdapter(List<Card> cards) {
+    public CardAdapter(List<Card> cards)
+    {
         this.cards = cards;
     }
 
@@ -79,14 +80,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkBox.isChecked()){//этот блок с ифом я нашёл вот в это подворотне shorturl.at/efryH ну, вернее идею в целом как отметить это чекбокс
+                if (checkBox.isChecked()) {//этот блок с ифом я нашёл вот в это подворотне shorturl.at/efryH ну, вернее идею в целом как отметить это чекбокс
                     checkBox.setChecked(true);
                     AddNewPool.cards.add(card);
-                    Log.d("666", "added: "+card.getTitle());
-                }else{
+                    Log.d("666", "added: " + card.getTitle() + "  ID:  " + card.getId());
+
+
+                } else {
                     checkBox.setChecked(false);
                     AddNewPool.cards.remove(card);
-                    Log.d("666", "removed: "+card.getTitle());
+                    Log.d("666", "removed: " + card.getTitle());
 
                 }
             }

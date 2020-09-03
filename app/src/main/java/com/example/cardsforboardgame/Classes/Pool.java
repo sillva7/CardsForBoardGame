@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.cardsforboardgame.Utils.BitmapConverter;
+import com.example.cardsforboardgame.Utils.CardConverter;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class Pool {
     int id;
     String title;
     String description;
-    @TypeConverters({})//dont forget
+    @TypeConverters({CardConverter.class})
     ArrayList<Card> cards;
     @TypeConverters({BitmapConverter.class})
     Bitmap bitmap;//for img

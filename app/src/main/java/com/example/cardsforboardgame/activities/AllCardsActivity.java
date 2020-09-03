@@ -36,7 +36,7 @@ public class AllCardsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_cards);
         saveToPool = findViewById(R.id.saveToPool);
-
+       // final StringBuilder titleOfBtn = new StringBuilder();
         final Intent intent = getIntent();
         final int checkBoxAndBtn = intent.getIntExtra("checkbox", 0);
 
@@ -44,19 +44,30 @@ public class AllCardsActivity extends AppCompatActivity {
         if (checkBoxAndBtn == 0) {//для отображения чекбокса и на видимость кнопки для сохранения карточек в пул
             CardAdapter.checkbox = 0;
             saveToPool.setVisibility(View.GONE);
+
         } else {
             CardAdapter.checkbox = 1;
             saveToPool.setVisibility(View.VISIBLE);
+            AddNewPool.cards.clear();
 
         }
         saveToPool.setOnClickListener(new View.OnClickListener() {//сохранение в пул по нажатию этой кнопки
             @Override
             public void onClick(View view) {
-                String titleOfBtn="";
+                String titleOfBtn = "";
+                Log.d("747474", "onClick: "+titleOfBtn);
+
                 for (int i = 0; i < AddNewPool.cards.size(); i++) {
-                    titleOfBtn += (AddNewPool.cards.get(i).getTitle() + " ");
+                    titleOfBtn = titleOfBtn + AddNewPool.cards.get(i).getTitle() + " ";
                 }
                 AddNewPool.addNewBtn.setText(titleOfBtn);
+                Log.d("747474", "onClick1: "+titleOfBtn);
+
+
+                for (int i = 0; i < AddNewPool.cards.size(); i++) {
+                    Log.d("777", "onClick: " + AddNewPool.cards.get(i).getTitle());
+                }
+
                 AllCardsActivity.this.finish();
 
             }

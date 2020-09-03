@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,9 +18,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cardsforboardgame.Classes.Card;
+import com.example.cardsforboardgame.Classes.Pool;
+import com.example.cardsforboardgame.DBStuf.MainViewModel;
 import com.example.cardsforboardgame.R;
+import com.example.cardsforboardgame.Testt;
+import com.example.cardsforboardgame.Utils.BitmapConverter;
 import com.example.cardsforboardgame.adapters.CardAdapter;
 import com.nex3z.flowlayout.FlowLayout;
 
@@ -36,6 +42,7 @@ public class AddNewPool extends AppCompatActivity {
     Bitmap bitmap;
     ImageView imageViewOfCard;
     Button setImg;
+    MainViewModel viewModel;
 
 
     @Override
@@ -46,6 +53,8 @@ public class AddNewPool extends AppCompatActivity {
         addNewBtn = findViewById(R.id.addNewCard);
         imageViewOfCard = findViewById(R.id.imageViewOfCard);
         setImg = findViewById(R.id.setIMG);
+        Drawable defaultIMG = getResources().getDrawable(R.drawable.ic_launcher_foreground);
+        bitmap = BitmapConverter.drawableToBitmap(defaultIMG);
         addNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +86,7 @@ public class AddNewPool extends AppCompatActivity {
         //flowLayoutBtns.addView(myButton);//добавляем кнопку в наш лайаут
 
     }
+
     public void setImg(View view) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);////Вызываем стандартную галерею для выбора изображения с помощью Intent.ACTION_PICK
         photoPickerIntent.setType("image/*");//Тип получаемых объектов - image
@@ -120,6 +130,31 @@ public class AddNewPool extends AppCompatActivity {
         return cursor.getString(column_index);
     }
 
+    private boolean isEmpty(EditText etText) {
+        if (etText.getText().toString().trim().length() > 0)
+            return false;
+
+        return true;
+    }
+
     public void savePool(View view) {
+
+
+        if (isEmpty(titleET)) {
+            titleET.setError(getString(R.string.NeedTitle));
+            Toast.makeText(this, getString(R.string.NeedTitle), Toast.LENGTH_SHORT).show();
+        } else if (isEmpty(descriptionET)) {
+            descriptionET.setError(getString(R.string.NeedDescription));
+            Toast.makeText(this, getString(R.string.NeedDescription), Toast.LENGTH_SHORT).show();
+        } else if (cards.isEmpty()) {
+            Toast.makeText(this, R.string.EmptyListOfCard, Toast.LENGTH_SHORT).show();
+        } else {
+            Pool pool = new Pool(titleET.getText().toString(), descriptionET.getText().toString(),cards, bitmap);
+            viewModel.insertPool(pool);
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+
+        }
+
+
     }
 }

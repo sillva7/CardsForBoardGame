@@ -161,9 +161,7 @@ public class AddNewCardActivity extends AppCompatActivity {
         } else {
             Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), bitmap);
             viewModel.insertCard(card);
-            Intent intent = new Intent(AddNewCardActivity.this, Testt.class);
-            intent.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());//сюда надо добавлять ID взятый из БД, а не из поля только что созданного объекта!!!!
-            startActivity(intent);
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
         }
 
 
