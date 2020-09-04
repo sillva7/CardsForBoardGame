@@ -14,21 +14,21 @@ public class CardConverter extends AppCompatActivity {
 
 
     @TypeConverter
-    public String toStrings(ArrayList<Card> cards) {
+    public String toStrings(ArrayList<String> cards) {
         String s;
-        s = cards.get(0).getTitle();
+        s = cards.get(0);
         for (int i = 1; i < cards.size(); i++) {
-            s += " " + cards.get(i).getTitle();
+            s += " " + cards.get(i);
         }
         return s;
     }
 
     @TypeConverter
-    public ArrayList<Card> toArrayList(String s) {
+    public ArrayList<String> toArrayList(String s) {
         String[] a = s.split(" ");
-        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<String> cards = new ArrayList<>();
         for (int i = 0; i < s.length(); i++) {
-            cards.add(viewModel.getCardByTitle(a[i]));
+            cards.add(a[i]);
         }
         return cards;
     }

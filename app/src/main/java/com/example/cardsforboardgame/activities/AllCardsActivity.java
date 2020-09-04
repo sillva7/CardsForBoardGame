@@ -58,14 +58,14 @@ public class AllCardsActivity extends AppCompatActivity {
                 Log.d("747474", "onClick: "+titleOfBtn);
 
                 for (int i = 0; i < AddNewPool.cards.size(); i++) {
-                    titleOfBtn = titleOfBtn + AddNewPool.cards.get(i).getTitle() + " ";
+                    titleOfBtn = titleOfBtn + AddNewPool.cards.get(i) + " ";
                 }
                 AddNewPool.addNewBtn.setText(titleOfBtn);
                 Log.d("747474", "onClick1: "+titleOfBtn);
 
 
                 for (int i = 0; i < AddNewPool.cards.size(); i++) {
-                    Log.d("777", "onClick: " + AddNewPool.cards.get(i).getTitle());
+                    Log.d("777", "onClick: " + AddNewPool.cards.get(i));
                 }
 
                 AllCardsActivity.this.finish();

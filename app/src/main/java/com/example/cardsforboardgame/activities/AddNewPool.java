@@ -37,7 +37,7 @@ public class AddNewPool extends AppCompatActivity {
     EditText titleET, descriptionET;
     FlowLayout flowLayoutBtns;
     public static Button addNewBtn;//не забыть исправить с помощью того метода что и при галереи использовался мб?
-    public static ArrayList<Card> cards = new ArrayList<>();//будем помещать карточки сюда и вставлять весь список в объект Pool
+    public static ArrayList<String> cards = new ArrayList<>();//будем помещать карточки сюда и вставлять весь список в объект Pool
     private final int Pick_image = 1;
     Bitmap bitmap;
     ImageView imageViewOfCard;

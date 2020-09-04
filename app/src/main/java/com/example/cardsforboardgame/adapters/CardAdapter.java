@@ -82,13 +82,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
             public void onClick(View view) {
                 if (checkBox.isChecked()) {//этот блок с ифом я нашёл вот в это подворотне shorturl.at/efryH ну, вернее идею в целом как отметить это чекбокс
                     checkBox.setChecked(true);
-                    AddNewPool.cards.add(card);
+                    AddNewPool.cards.add(card.getTitle());
                     Log.d("666", "added: " + card.getTitle() + "  ID:  " + card.getId());
 
 
                 } else {
                     checkBox.setChecked(false);
-                    AddNewPool.cards.remove(card);
+                    AddNewPool.cards.remove(card.getTitle());
                     Log.d("666", "removed: " + card.getTitle());
 
                 }

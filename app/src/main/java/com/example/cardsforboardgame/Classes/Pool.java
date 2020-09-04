@@ -21,7 +21,7 @@ public class Pool {
     String description;
 
     @TypeConverters({CardConverter.class})
-    ArrayList<Card> cards;
+    ArrayList<String> cards;
 
     @TypeConverters({BitmapConverter.class})
     Bitmap bitmap;//for img
@@ -42,11 +42,11 @@ public class Pool {
         this.description = description;
     }
 
-    public ArrayList<Card> getCards() {
+    public ArrayList<String> getCards() {
         return cards;
     }
 
-    public void setCards(ArrayList<Card> cards) {
+    public void setCards(ArrayList<String> cards) {
         this.cards = cards;
     }
 
@@ -58,7 +58,7 @@ public class Pool {
         this.bitmap = bitmap;
     }
 
-    public Pool(int id, String title, String description, ArrayList<Card> cards, Bitmap bitmap) {
+    public Pool(int id, String title, String description, ArrayList<String> cards, Bitmap bitmap) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -67,7 +67,7 @@ public class Pool {
     }
 
     @Ignore
-    public Pool(String title, String description, ArrayList<Card> cards, Bitmap bitmap) {
+    public Pool(String title, String description, ArrayList<String> cards, Bitmap bitmap) {
         this.title = title;
         this.description = description;
         this.cards = cards;
@@ -75,7 +75,7 @@ public class Pool {
     }
 
     @Ignore//опционально можно будет добавлять или нет картинку к пулу
-    public Pool(String title, String description, ArrayList<Card> cards) {
+    public Pool(String title, String description, ArrayList<String> cards) {
         this.title = title;
         this.description = description;
         this.cards = cards;
