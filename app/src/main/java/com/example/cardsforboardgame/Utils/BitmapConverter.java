@@ -31,7 +31,9 @@ public class BitmapConverter {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
-    public static Bitmap drawableToBitmap (Drawable drawable) {//Конвертация дровбл в битмап, наш на стоке
+
+
+    public static Bitmap drawableToBitmap (Drawable drawable) {//Конвертация дровбл в битмап, нашёл на стоке
         Bitmap bitmap = null;
 
         if (drawable instanceof BitmapDrawable) {

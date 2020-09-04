@@ -149,7 +149,7 @@ public class AddNewPool extends AppCompatActivity {
         } else if (cards.isEmpty()) {
             Toast.makeText(this, R.string.EmptyListOfCard, Toast.LENGTH_SHORT).show();
         } else {
-            Pool pool = new Pool(titleET.getText().toString(), descriptionET.getText().toString(),cards, bitmap);
+            Pool pool = new Pool(titleET.getText().toString(), descriptionET.getText().toString(), cards, bitmap);
             viewModel.insertPool(pool);
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
 

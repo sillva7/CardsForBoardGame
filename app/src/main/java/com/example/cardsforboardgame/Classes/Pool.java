@@ -13,13 +13,16 @@ import com.example.cardsforboardgame.Utils.CardConverter;
 import java.util.ArrayList;
 
 @Entity(tableName = "pools")
+
 public class Pool {
     @PrimaryKey(autoGenerate = true)
-    int id;
+    public int id;
     String title;
     String description;
+
     @TypeConverters({CardConverter.class})
     ArrayList<Card> cards;
+
     @TypeConverters({BitmapConverter.class})
     Bitmap bitmap;//for img
 

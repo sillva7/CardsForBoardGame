@@ -96,8 +96,9 @@ public class AllCardsActivity extends AppCompatActivity {
                 Card card = cardAdapter.getCards().get(position);
 
 
-                Intent intentForCardEdit = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
+                Intent intentForCardEdit = new Intent(AllCardsActivity.this, CardViewActivity.class);
                 intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
+                Log.d("494949", "onCardClick: "+viewModel.getCardByTitle(card.getTitle()).getId());
                 startActivity(intentForCardEdit);
 
 

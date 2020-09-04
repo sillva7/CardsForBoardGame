@@ -8,21 +8,118 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.cardsforboardgame.Classes.Card;
+import com.example.cardsforboardgame.Classes.Pool;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainViewModel extends AndroidViewModel {
 
-    private static CardDB database;
+    private static CardDB cardDatabase;
+    private static PoolDB poolDatabase;
     private LiveData<List<Card>> cards;
+    private LiveData<List<Pool>> pools;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
 
-        database = CardDB.getInstance(getApplication());
-        cards = database.cardDao().getAllCards();
+        cardDatabase = CardDB.getInstance(getApplication());
+        poolDatabase = PoolDB.getInstance(getApplication());
+        cards = cardDatabase.cardDao().getAllCards();
+        pools = poolDatabase.poolDao().getAllPools();
 
+    }
+
+    public LiveData<List<Pool>> getPools() {
+        return pools;
+    }
+
+    private static class GetPoolByTitleTask extends AsyncTask<String, Void, Pool> {
+
+        @Override
+        protected Pool doInBackground(String... strings) {
+
+            if (strings != null && strings.length > 0) {
+                return poolDatabase.poolDao().getPoolByTitle(strings[0]);
+            }
+            return null;
+        }
+    }
+
+    public Pool getPoolByTitle(String title) {
+        try {
+            return new GetPoolByTitleTask().execute(title).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static class GetPoolByIdTask extends AsyncTask<Integer, Void, Pool> {
+
+        @Override
+        protected Pool doInBackground(Integer... integers) {
+            if (integers.length > 0) {//здесь не буду дописывать integers!=null, посмотрим как будет работать
+                return poolDatabase.poolDao().getPoolById(integers[0]);
+            }
+            return null;
+        }
+    }
+
+    public Pool getPoolById(int i){
+        try {
+            return new GetPoolByIdTask().execute(i).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static class DeleteAllPoolsTask extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            poolDatabase.poolDao().deleteAllPools();
+            return null;
+        }
+    }
+    public void deleteAllPools(){
+        new DeleteAllPoolsTask().execute();
+    }
+
+    private static class DeletePoolTask extends AsyncTask<Pool, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Pool... pools) {
+            if(pools.length>0){
+                poolDatabase.poolDao().deletePool(pools[0]);
+                return null;
+            }
+            return null;
+        }
+    }
+    public void deletePool(Pool pool){
+        new DeletePoolTask().execute(pool);
+    }
+
+    private static class InsertPoolTask extends AsyncTask<Pool, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Pool... pools) {
+
+            if(pools.length>0){
+                poolDatabase.poolDao().insertPool(pools[0]);
+                return null;
+            }
+            return null;
+        }
+    }
+    public void insertPool(Pool pool){
+        new InsertPoolTask().execute(pool);
     }
 
     public LiveData<List<Card>> getCards() {
@@ -33,7 +130,7 @@ public class MainViewModel extends AndroidViewModel {
         @Override
         protected Card doInBackground(String... string) {
             if (string != null && string.length > 0) {
-                return database.cardDao().getCardByTitle(string[0]);
+                return cardDatabase.cardDao().getCardByTitle(string[0]);
             }
             return null;
         }
@@ -54,7 +151,7 @@ public class MainViewModel extends AndroidViewModel {
         @Override
         protected Card doInBackground(Integer... integers) {
             if (integers != null && integers.length > 0) {
-                return database.cardDao().getCardById(integers[0]);
+                return cardDatabase.cardDao().getCardById(integers[0]);
             }
             return null;
         }
@@ -75,7 +172,7 @@ public class MainViewModel extends AndroidViewModel {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            database.cardDao().deleteAllMCards();
+            cardDatabase.cardDao().deleteAllMCards();
             return null;
         }
     }
@@ -89,7 +186,7 @@ public class MainViewModel extends AndroidViewModel {
         @Override
         protected Void doInBackground(Card... cards) {
             if (cards != null && cards.length > 0) {
-                database.cardDao().deleteCard(cards[0]);
+                cardDatabase.cardDao().deleteCard(cards[0]);
             }
             return null;
         }
@@ -104,12 +201,13 @@ public class MainViewModel extends AndroidViewModel {
         @Override
         protected Void doInBackground(Card... cards) {
             if (cards != null && cards.length > 0) {
-                database.cardDao().insertCard(cards[0]);
+                cardDatabase.cardDao().insertCard(cards[0]);
             }
             return null;
         }
     }
-    public void insertCard(Card card){
+
+    public void insertCard(Card card) {
         new InsertCardTask().execute(card);
     }
 

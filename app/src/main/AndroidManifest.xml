@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.AddNewPool"></activity>
+        <activity android:name=".activities.PoolViewActivity"></activity>
+        <activity android:name=".activities.CardViewActivity" />
+        <activity android:name=".activities.AddNewPool" />
         <activity android:name=".activities.AllCardsActivity" />
         <activity android:name=".activities.AddNewCardActivity" />
         <activity android:name=".Testt" />
