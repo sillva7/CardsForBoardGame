@@ -39,4 +39,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, AddNewPool.class);
         startActivity(intent);
     }
+
+    public void toAllPools(View view) {
+        Intent intent = new Intent(MainActivity.this, AllPoolsActivity.class);
+        startActivity(intent);
+    }
 }

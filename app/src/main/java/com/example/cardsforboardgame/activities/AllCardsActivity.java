@@ -64,7 +64,7 @@ public class AllCardsActivity extends AppCompatActivity {
                 Log.d("747474", "onClick1: "+titleOfBtn);
 
 
-                for (int i = 0; i < AddNewPool.cards.size(); i++) {
+                for (int i = 0; i < AddNewPool.cards.size(); i++) {//проверка
                     Log.d("777", "onClick: " + AddNewPool.cards.get(i));
                 }
 
@@ -83,10 +83,13 @@ public class AllCardsActivity extends AppCompatActivity {
         cardsFromListData.observe(this, new Observer<List<Card>>() {//для вытаскивания списка из LiveData
             @Override
             public void onChanged(List<Card> cardss) {
+
                 cardAdapter.setCards(cardss);
 
             }
         });
+
+
         recyclerView.setAdapter(cardAdapter);
 
 

@@ -42,7 +42,7 @@ public class Pool {
         this.description = description;
     }
 
-    public ArrayList<String> getCards() {
+    public ArrayList<String> getCards() {//Будем брать тайтлы карточек из массива и по ним уже брать сами объекты из бд
         return cards;
     }
 

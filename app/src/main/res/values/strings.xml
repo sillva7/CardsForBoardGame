@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">CardsForBoardGame</string>
-    <string name="enter_name_of_card">Name of card</string>
+    <string name="enter_name_of_card">Title</string>
     <string name="title">Title:</string>
     <string name="description">Description:</string>
-    <string name="description_of_card">Description of card</string>
+    <string name="description_of_card">Description</string>
     <string name="save">Save</string>
     <string name="close">Close</string>
     <string name="load_image_from_gallery">Load image from gallery</string>
@@ -21,9 +21,10 @@
     <string name="save_to_pool">Save to pool</string>
     <string name="choose_cards">Choose cards for your pool</string>
     <string name="image_of_pool">Image of pool(optional):</string>
-    <string name="choose_picture">Choose picture (optional)</string>
+    <string name="choose_picture">Choose picture</string>
     <string name="save_this_pool">Save this pool</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="EmptyListOfCard">Pls add some cards to your pool</string>
     <string name="cards_in_pool">Cards in pool:</string>
+    <string name="needCards">Need cards</string>
 </resources>

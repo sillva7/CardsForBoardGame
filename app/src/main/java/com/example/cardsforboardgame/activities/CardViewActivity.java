@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ public class CardViewActivity extends AppCompatActivity {
     TextView description;
     ImageView imageViewInCardView;
     MainViewModel viewModel;
+    boolean extendFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,17 @@ public class CardViewActivity extends AppCompatActivity {
     }
 
     public void extend(View view) {
-        description.setMaxLines(Integer.MAX_VALUE);//убираем ограничение по строкам, чтобы раскрыть описание полностью
-        description.setEllipsize(null);//также необходимо как и строчка выше. идут в наборе
+        if(!extendFlag){
+            description.setMaxLines(Integer.MAX_VALUE);//убираем ограничение по строкам, чтобы раскрыть описание полностью
+            description.setEllipsize(null);//также необходимо как и строчка выше. идут в наборе
+            extendFlag = true;
+        }else{
+            description.setMaxLines(3);
+            description.setEllipsize(TextUtils.TruncateAt.END);
+            extendFlag = false;
+
+        }
+
 
     }
 }

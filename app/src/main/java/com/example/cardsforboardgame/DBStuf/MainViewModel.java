@@ -2,6 +2,7 @@ package com.example.cardsforboardgame.DBStuf;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -68,7 +69,7 @@ public class MainViewModel extends AndroidViewModel {
         }
     }
 
-    public Pool getPoolById(int i){
+    public Pool getPoolById(int i) {
         try {
             return new GetPoolByIdTask().execute(i).get();
         } catch (ExecutionException e) {
@@ -79,7 +80,7 @@ public class MainViewModel extends AndroidViewModel {
         return null;
     }
 
-    private static class DeleteAllPoolsTask extends AsyncTask<Void, Void, Void>{
+    private static class DeleteAllPoolsTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -87,40 +88,43 @@ public class MainViewModel extends AndroidViewModel {
             return null;
         }
     }
-    public void deleteAllPools(){
+
+    public void deleteAllPools() {
         new DeleteAllPoolsTask().execute();
     }
 
-    private static class DeletePoolTask extends AsyncTask<Pool, Void, Void>{
+    private static class DeletePoolTask extends AsyncTask<Pool, Void, Void> {
 
         @Override
         protected Void doInBackground(Pool... pools) {
-            if(pools.length>0){
+            if (pools.length > 0) {
                 poolDatabase.poolDao().deletePool(pools[0]);
                 return null;
             }
             return null;
         }
     }
-    public void deletePool(Pool pool){
+
+    public void deletePool(Pool pool) {
         new DeletePoolTask().execute(pool);
     }
 
-    private static class InsertPoolTask extends AsyncTask<Pool, Void, Void>{
+    private static class InsertPoolTask extends AsyncTask<Pool, Void, Void> {
 
         @Override
         protected Void doInBackground(Pool... pools) {
 
-            if(pools.length>0){
+            if (pools != null && pools.length > 0) {
                 poolDatabase.poolDao().insertPool(pools[0]);
-                return null;
             }
             return null;
         }
     }
-    public void insertPool(Pool pool){
+
+    public void insertPool(Pool pool) {
         new InsertPoolTask().execute(pool);
     }
+
 
     public LiveData<List<Card>> getCards() {
         return cards;

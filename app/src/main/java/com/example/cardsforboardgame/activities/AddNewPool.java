@@ -2,12 +2,14 @@ package com.example.cardsforboardgame.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +35,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import com.example.cardsforboardgame.R.drawable;
+
+
 public class AddNewPool extends AppCompatActivity {
     EditText titleET, descriptionET;
     FlowLayout flowLayoutBtns;
@@ -49,12 +54,15 @@ public class AddNewPool extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_pool);
+        titleET = findViewById(R.id.etPoolTitle);
+        descriptionET = findViewById(R.id.etPoolDescription);
         flowLayoutBtns = findViewById(R.id.flowLayoutBtns);
         addNewBtn = findViewById(R.id.addNewCard);
         imageViewOfCard = findViewById(R.id.imageViewOfCard);
         setImg = findViewById(R.id.setIMG);
-        Drawable defaultIMG = getResources().getDrawable(R.drawable.ic_launcher_foreground);
-        bitmap = BitmapConverter.drawableToBitmap(defaultIMG);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+
         addNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,8 +139,9 @@ public class AddNewPool extends AppCompatActivity {
     }
 
     private boolean isEmpty(EditText etText) {
-        if (etText.getText().toString().trim().length() > 0)
+        if (etText.getText().toString().trim().length() > 0) {
             return false;
+        }
 
         return true;
     }
@@ -148,13 +157,30 @@ public class AddNewPool extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.NeedDescription), Toast.LENGTH_SHORT).show();
         } else if (cards.isEmpty()) {
             Toast.makeText(this, R.string.EmptyListOfCard, Toast.LENGTH_SHORT).show();
+            addNewBtn.setError(getString(R.string.needCards));
+        } else if (bitmap == null) {
+            Toast.makeText(this, R.string.choose_picture, Toast.LENGTH_SHORT).show();
         } else {
-            Pool pool = new Pool(titleET.getText().toString(), descriptionET.getText().toString(), cards, bitmap);
+            Pool pool;
+
+            //pool = new Pool(titleET.getText().toString(), descriptionET.getText().toString(), cards);//добавим в будущем
+
+            pool = new Pool(titleET.getText().toString(), descriptionET.getText().toString(), cards, bitmap);
+
+
             viewModel.insertPool(pool);
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+            cards.clear();
 
         }
 
+
+    }
+
+    public void close(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        cards.clear();
 
     }
 }

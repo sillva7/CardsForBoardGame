@@ -17,6 +17,16 @@ import java.util.List;
 
 public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder> {
     private List<Pool> pools;
+    private OnPoolClickListener onPoolClickListener;
+
+    public void setOnPoolClickListener(OnPoolClickListener onPoolClickListener) {
+        this.onPoolClickListener = onPoolClickListener;
+    }
+
+    public interface OnPoolClickListener
+    {
+        void onPoolClick(int position);
+    }
 
     public void setPools(List<Pool> pools) {
         this.pools = pools;
@@ -46,13 +56,9 @@ public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder
         TextView description = holder.description;
         image.setImageBitmap(pool.getBitmap());
         title.setText(pool.getTitle());
+        description.setText(pool.getDescription());
 
-        String cards = pool.getCards().get(0) + "";
-        for (int i = 1; i < pool.getCards().size(); i++) {
-            cards += "\n" + pool.getCards().get(i).getTitle();
-        }
 
-        description.setText(cards);
     }
 
     @Override
@@ -71,6 +77,14 @@ public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder
             image = itemView.findViewById(R.id.imageViewPool);
             title = itemView.findViewById(R.id.titlePoolTV);
             description = itemView.findViewById(R.id.descriptionPoolTV);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(onPoolClickListener!=null){
+                        onPoolClickListener.onPoolClick(getAdapterPosition());
+                    }
+                }
+            });
         }
     }
 }

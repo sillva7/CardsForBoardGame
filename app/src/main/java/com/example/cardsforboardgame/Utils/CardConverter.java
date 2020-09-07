@@ -10,16 +10,17 @@ import com.example.cardsforboardgame.DBStuf.MainViewModel;
 import java.util.ArrayList;
 
 public class CardConverter extends AppCompatActivity {
-    public MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
 
     @TypeConverter
-    public String toStrings(ArrayList<String> cards) {
-        String s;
-        s = cards.get(0);
-        for (int i = 1; i < cards.size(); i++) {
-            s += " " + cards.get(i);
-        }
+    public String toStrings(ArrayList<String> cards1) {
+        String s ="";
+
+            for (int i = 0; i < cards1.size(); i++) {
+                s += " " + cards1.get(i);
+            }
+
+
         return s;
     }
 
@@ -27,7 +28,7 @@ public class CardConverter extends AppCompatActivity {
     public ArrayList<String> toArrayList(String s) {
         String[] a = s.split(" ");
         ArrayList<String> cards = new ArrayList<>();
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < a.length; i++) {
             cards.add(a[i]);
         }
         return cards;
