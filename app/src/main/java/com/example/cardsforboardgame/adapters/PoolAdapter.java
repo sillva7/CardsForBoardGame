@@ -13,6 +13,7 @@ import com.example.cardsforboardgame.Classes.Card;
 import com.example.cardsforboardgame.Classes.Pool;
 import com.example.cardsforboardgame.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder> {
@@ -39,6 +40,7 @@ public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder
 
     public PoolAdapter(List<Pool> pools) {
         this.pools = pools;
+        this.pools = new ArrayList<Pool>();
     }
 
     @NonNull
@@ -56,7 +58,8 @@ public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder
         TextView description = holder.description;
         image.setImageBitmap(pool.getBitmap());
         title.setText(pool.getTitle());
-        description.setText(pool.getDescription());
+        String s = pool.getDescription()+". "+pool.arrayToString(pool.getCards());
+        description.setText(s);
 
 
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,6 +68,7 @@ public class AllCardsActivity extends AppCompatActivity {
                 for (int i = 0; i < AddNewPool.cards.size(); i++) {//проверка
                     Log.d("777", "onClick: " + AddNewPool.cards.get(i));
                 }
+                CardAdapter.checkbox = 0;//отключаем чекбоксы при выходе
 
                 AllCardsActivity.this.finish();
 
@@ -78,7 +80,7 @@ public class AllCardsActivity extends AppCompatActivity {
         cards = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
         cardAdapter = new CardAdapter(cards);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         LiveData<List<Card>> cardsFromListData = viewModel.getCards();
         cardsFromListData.observe(this, new Observer<List<Card>>() {//для вытаскивания списка из LiveData
             @Override

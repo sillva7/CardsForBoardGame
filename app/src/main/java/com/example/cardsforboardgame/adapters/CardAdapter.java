@@ -22,7 +22,7 @@ import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHolder> {
 
-    public static int checkbox = 0;//это чтобы регулировать видимость чебокса
+    public static int checkbox = 0;//это чтобы регулировать видимость чебокса, 0 - выключены, вроде как
 
     private List<Card> cards;
     private OnCardClickListener onCardClickListener;//создаём объект интерфейс

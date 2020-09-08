@@ -1,5 +1,7 @@
 package com.example.cardsforboardgame.Utils;
 
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.TypeConverter;
@@ -15,23 +17,26 @@ public class CardConverter extends AppCompatActivity {
     @TypeConverter
     public String toStrings(ArrayList<String> cards1) {
         String s ="";
-
-            for (int i = 0; i < cards1.size(); i++) {
-                s += " " + cards1.get(i);
-            }
-
+        for (int i = 0; i < cards1.size(); i++) {
+            s +=  cards1.get(i)+" ";
+        }
 
         return s;
     }
 
     @TypeConverter
     public ArrayList<String> toArrayList(String s) {
+        Log.d("989898", "toStrings: "+ s);
+
         String[] a = s.split(" ");
+
         ArrayList<String> cards = new ArrayList<>();
         for (int i = 0; i < a.length; i++) {
             cards.add(a[i]);
         }
+        Log.d("989898", "toArrayList111: " + cards.toString());
         return cards;
+
     }
 
 //    @TypeConverter

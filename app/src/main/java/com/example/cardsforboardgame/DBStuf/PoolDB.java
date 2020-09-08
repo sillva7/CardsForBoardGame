@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.cardsforboardgame.Classes.Pool;
 
-@Database(entities = {Pool.class}, version = 6, exportSchema = false)
+@Database(entities = {Pool.class}, version = 7, exportSchema = false)
 public abstract class PoolDB extends RoomDatabase {
 
     private static final String DB_NAME = "pools.db";

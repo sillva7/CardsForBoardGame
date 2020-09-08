@@ -27,12 +27,13 @@ public class AllPoolsActivity extends AppCompatActivity {
     PoolAdapter poolAdapter;
     MainViewModel viewModel;
     ArrayList<Pool> pools;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_pools);
         recyclerView = findViewById(R.id.recyclerView);
-        pools =new ArrayList<>();
+        pools = new ArrayList<>();
         poolAdapter = new PoolAdapter(pools);
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
@@ -51,7 +52,12 @@ public class AllPoolsActivity extends AppCompatActivity {
         poolAdapter.setOnPoolClickListener(new PoolAdapter.OnPoolClickListener() {
             @Override
             public void onPoolClick(int position) {
-                Toast.makeText(AllPoolsActivity.this, "BOOOO", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AllPoolsActivity.this, "BOOOO" + position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AllPoolsActivity.this, PoolViewActivity.class);
+                int id = poolAdapter.getPools().get(position).getId();
+                //Log.d("161616", "onPoolClick: "+id);
+                intent.putExtra("id", id);
+                startActivity(intent);
             }
         });
 
