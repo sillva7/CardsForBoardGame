@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.cardsforboardgame.R;
+import com.example.cardsforboardgame.Testt;
 import com.example.cardsforboardgame.adapters.CardAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void toAllPools(View view) {
         Intent intent = new Intent(MainActivity.this, AllPoolsActivity.class);
+        startActivity(intent);
+    }
+
+    public void test(View view) {
+        Intent intent = new Intent(MainActivity.this, Testt.class);
         startActivity(intent);
     }
 }

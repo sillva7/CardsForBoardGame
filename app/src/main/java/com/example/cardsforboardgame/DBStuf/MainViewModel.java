@@ -216,4 +216,19 @@ public class MainViewModel extends AndroidViewModel {
     }
 
 
+    private static class UpdateCardTask extends AsyncTask<Card, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Card... cards) {
+            if (cards != null && cards.length > 0) {
+                cardDatabase.cardDao().updateCard(cards[0]);
+            }
+            return null;
+        }
+    }
+    public void updateCard(Card card){
+        new UpdateCardTask().execute(card);
+    }
+
+
 }

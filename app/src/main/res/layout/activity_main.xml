@@ -9,6 +9,16 @@
 
 
     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="108dp"
+        android:onClick="test"
+        android:text="TEst"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/allPools"
         style="@style/TextForBtns"
         android:layout_width="wrap_content"

@@ -29,7 +29,9 @@
                 android:layout_marginEnd="10dp"
                 android:text="@string/title"
                 android:textColor="#000"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:maxLines="1"
+                />
 
             <EditText
                 android:id="@+id/etPoolTitle"
@@ -65,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/description_of_card"
+                android:maxLines="1"
                 android:textSize="22sp" />
 
         </LinearLayout>

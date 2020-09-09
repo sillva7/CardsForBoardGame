@@ -43,8 +43,10 @@ public class PoolViewActivity extends AppCompatActivity {
         ArrayList<String> cardsTitles = pool.getCards();
         ArrayList<Card> cards = new ArrayList<>();
         for (int i = 0; i < cardsTitles.size(); i++) {
+
             cards.add(viewModel.getCardByTitle(cardsTitles.get(i)));
-            Log.d("56565656", "onCreate: "+ cards.get(i).getTitle());
+            Log.d("56565656", "onCreate: " + cards.get(i).getTitle());
+
         }
         imagePoolView = findViewById(R.id.imageViewOfPoolView);
         Bitmap bitmap = pool.getBitmap();
@@ -52,7 +54,7 @@ public class PoolViewActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewInPoolViewActivity);
 
         cardAdapter = new CardAdapter(cards);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2 ));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(cardAdapter);
 
         title.setText(pool.getTitle());

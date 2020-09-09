@@ -27,4 +27,14 @@
     <string name="EmptyListOfCard">Pls add some cards to your pool</string>
     <string name="cards_in_pool">Cards in pool:</string>
     <string name="needCards">Need cards</string>
+    <string name="delete_card">Delete card</string>
+    <string name="edit_card">Edit Card</string>
+    <string name="Update">Update</string>
+    <string name="delete_this_card">Delete this card?</string>
+    <string name="yes">Yes</string>
+
+    <string name="delete">Delete?</string>
+    <string name="rusure">Are you sure?</string>
+    <string name="deleted">Deleted</string>
+    <string name="no">No</string>
 </resources>
