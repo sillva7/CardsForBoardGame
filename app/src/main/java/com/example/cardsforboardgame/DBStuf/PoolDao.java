@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.cardsforboardgame.Classes.Pool;
 
@@ -30,5 +31,8 @@ public interface PoolDao {
 
     @Delete
     void deletePool(Pool pool);
+
+    @Update
+    void updatePool(Pool pool);
 
 }

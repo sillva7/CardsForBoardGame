@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.example.cardsforboardgame.Classes.Card;
 import com.example.cardsforboardgame.Classes.CustomDialogFragment;
+import com.example.cardsforboardgame.Classes.Pool;
 import com.example.cardsforboardgame.DBStuf.MainViewModel;
 import com.example.cardsforboardgame.R;
 import com.example.cardsforboardgame.Testt;
@@ -47,7 +48,7 @@ import java.util.List;
 
 public class AddNewCardActivity extends AppCompatActivity {
 
-    private Button setImgBtn,save;
+    private Button setImgBtn, save;
     private ImageView imageViewOfCard;
     private final int Pick_image = 1;
     private byte[] byteForImg;
@@ -83,11 +84,11 @@ public class AddNewCardActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        cardId = intent.getIntExtra("id",0);
-        if(cardId==0){
+        cardId = intent.getIntExtra("id", 0);
+        if (cardId == 0) {
             Toast.makeText(this, R.string.CreateNewCard, Toast.LENGTH_SHORT).show();
             setImgBtn.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             save.setText(R.string.Update);
             titleET.setText(viewModel.getCardById(cardId).getTitle());
             descriptionET.setText(viewModel.getCardById(cardId).getDescrption());
@@ -95,9 +96,6 @@ public class AddNewCardActivity extends AppCompatActivity {
             imageViewOfCard.setImageBitmap(viewModel.getCardById(cardId).getBitmap());
         }
     }
-
-
-
 
 
     public void setImg(View view) {
@@ -165,8 +163,6 @@ public class AddNewCardActivity extends AppCompatActivity {
     public void save(View view) {
 
 
-
-
         if (isEmpty(titleET)) {
             titleET.setError(getString(R.string.NeedTitle));
             Toast.makeText(this, getString(R.string.NeedTitle), Toast.LENGTH_SHORT).show();
@@ -176,17 +172,17 @@ public class AddNewCardActivity extends AppCompatActivity {
         } else if (bitmap == null) {
             Toast.makeText(this, R.string.ImageIsEmpty, Toast.LENGTH_SHORT).show();
         } else {
-            if(cardId==0){
+            if (cardId == 0) {
                 Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), bitmap);
                 viewModel.insertCard(card);
                 Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
                 AddNewCardActivity.this.finish();
 
-            }else{
-                Log.d("7856", "save: " + viewModel.getCardById(cardId).getTitle()+ " " +viewModel.getCardById(cardId).getDescrption());
+            } else {
+                Log.d("7856", "save: " + viewModel.getCardById(cardId).getTitle() + " " + viewModel.getCardById(cardId).getDescrption());
                 Card card = new Card(cardId, titleET.getText().toString(), descriptionET.getText().toString(), bitmap);
                 viewModel.updateCard(card);
-                Log.d("7856", "save: " + viewModel.getCardById(cardId).getTitle()+ " " +viewModel.getCardById(cardId).getDescrption());
+                Log.d("7856", "save: " + viewModel.getCardById(cardId).getTitle() + " " + viewModel.getCardById(cardId).getDescrption());
                 Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
                 AddNewCardActivity.this.finish();
 
@@ -207,10 +203,10 @@ public class AddNewCardActivity extends AppCompatActivity {
         super.onPrepareOptionsMenu(menu);
         MenuItem menuItem = menu.findItem(R.id.deleteCard);
 
-        if(cardId!=0){
+        if (cardId != 0) {
             menuItem.setVisible(true);
 
-        }else {
+        } else {
             menuItem.setVisible(false);
         }
 
@@ -237,6 +233,7 @@ public class AddNewCardActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     private void deleteCard() {//перед удалением будет появляться окно запрашивающее точно ли хочу удалить?
         final AlertDialog.Builder builder = new AlertDialog.Builder(AddNewCardActivity.this);
         builder.setTitle(R.string.delete);
@@ -250,6 +247,33 @@ public class AddNewCardActivity extends AppCompatActivity {
         builder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+
+                        final List<Pool> pools = new ArrayList<>();//ниже блок для того чтобы удалять карточку из Пулов
+                        LiveData<List<Pool>> poolsFromListData = viewModel.getPools();
+                        poolsFromListData.observe(AddNewCardActivity.this, new Observer<List<Pool>>() {//для вытаскивания списка из LiveData
+                            @Override
+                            public void onChanged(List<Pool> poolss) {
+                                poolss = new ArrayList<>();
+                                for (int i = 0; i < poolss.size(); i++) {
+                                    ArrayList<String> cards = poolss.get(i).getCards();
+                                    for (int j = 0; j < cards.size(); j++) {
+                                        Log.d("lololo", "cardsList: " + cards.get(j));
+                                    }
+                                    ArrayList<String> cardsForRemove = new ArrayList<>();
+                                    for (int j = 0; j < cards.size(); j++) {
+                                        if (cards.get(j) == viewModel.getCardById(cardId).getTitle()) {
+                                            cardsForRemove.add(cards.get(j));
+                                        }
+                                        cards.removeAll(cardsForRemove);
+                                        poolss.get(i).setCards(cards);
+                                        viewModel.updatePool(poolss.get(i));
+                                    }
+                                }
+
+                            }
+                        });
+
+
                         viewModel.deleteCard(viewModel.getCardById(cardId));
                         Toast.makeText(AddNewCardActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
                         AddNewCardActivity.this.finish();

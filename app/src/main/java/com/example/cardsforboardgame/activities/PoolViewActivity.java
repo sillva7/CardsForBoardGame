@@ -45,7 +45,6 @@ public class PoolViewActivity extends AppCompatActivity {
         for (int i = 0; i < cardsTitles.size(); i++) {
 
             cards.add(viewModel.getCardByTitle(cardsTitles.get(i)));
-            Log.d("56565656", "onCreate: " + cards.get(i).getTitle());
 
         }
         imagePoolView = findViewById(R.id.imageViewOfPoolView);

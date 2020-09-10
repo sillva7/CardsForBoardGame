@@ -18,7 +18,7 @@ public class CardConverter extends AppCompatActivity {
     public String toStrings(ArrayList<String> cards1) {
         String s ="";
         for (int i = 0; i < cards1.size(); i++) {
-            s +=  cards1.get(i)+" ";
+            s +=  cards1.get(i)+"_ _";
         }
 
         return s;
@@ -28,7 +28,7 @@ public class CardConverter extends AppCompatActivity {
     public ArrayList<String> toArrayList(String s) {
         Log.d("989898", "toStrings: "+ s);
 
-        String[] a = s.split(" ");
+        String[] a = s.split("_ _");
 
         ArrayList<String> cards = new ArrayList<>();
         for (int i = 0; i < a.length; i++) {

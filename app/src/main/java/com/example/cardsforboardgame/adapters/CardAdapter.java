@@ -65,36 +65,40 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final CardViewViewHolder holder, int position) {
-        final Card card = cards.get(position);
-        ImageView imageView = holder.imageView;
-        TextView textView = holder.textView;
-        final CheckBox checkBox = holder.checkBox;
-        checkBox.setChecked(card.isChecked());//отметка для установки чекбокса
-        imageView.setImageBitmap(card.getBitmap());
-        textView.setText(card.getTitle());
-        if (checkbox == 0) {
-            checkBox.setVisibility(View.GONE);
-        } else {
-            checkBox.setVisibility(View.VISIBLE);
-        }
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkBox.isChecked()) {//этот блок с ифом я нашёл вот в это подворотне shorturl.at/efryH ну, вернее идею в целом как отметить это чекбокс
-                    checkBox.setChecked(true);
-                    AddNewPool.cards.add(card.getTitle());
-                    Log.d("666", "added: " + card.getTitle() + "  ID:  " + card.getId());
-
-
-                } else {
-                    checkBox.setChecked(false);
-                    AddNewPool.cards.remove(card.getTitle());
-                    Log.d("666", "removed: " + card.getTitle());
-
-                }
+        try {
+            final Card card = cards.get(position);
+            ImageView imageView = holder.imageView;
+            TextView textView = holder.textView;
+            final CheckBox checkBox = holder.checkBox;
+            checkBox.setChecked(card.isChecked());//отметка для установки чекбокса
+            imageView.setImageBitmap(card.getBitmap());
+            textView.setText(card.getTitle());
+            if (checkbox == 0) {
+                checkBox.setVisibility(View.GONE);
+            } else {
+                checkBox.setVisibility(View.VISIBLE);
             }
-        });
-        //checkBox.setChecked(true); просто тестировал че делает этот метод. выставляет значение чкбкса на "отмечено"
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (checkBox.isChecked()) {//этот блок с ифом я нашёл вот в это подворотне shorturl.at/efryH ну, вернее идею в целом как отметить это чекбокс
+                        checkBox.setChecked(true);
+                        AddNewPool.cards.add(card.getTitle());
+                        Log.d("666", "added: " + card.getTitle() + "  ID:  " + card.getId());
+
+
+                    } else {
+                        checkBox.setChecked(false);
+                        AddNewPool.cards.remove(card.getTitle());
+                        Log.d("666", "removed: " + card.getTitle());
+
+                    }
+                }
+            });
+            //checkBox.setChecked(true); просто тестировал че делает этот метод. выставляет значение чкбкса на "отмечено"
+        }catch (NullPointerException e){
+
+        }
     }
 
     public CardAdapter() {

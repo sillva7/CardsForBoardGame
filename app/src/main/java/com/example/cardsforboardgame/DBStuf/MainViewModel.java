@@ -125,6 +125,20 @@ public class MainViewModel extends AndroidViewModel {
         new InsertPoolTask().execute(pool);
     }
 
+    private static class UpdatePoolTask extends AsyncTask<Pool ,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Pool... pools) {
+            if (pools != null && pools.length > 0) {
+                poolDatabase.poolDao().updatePool(pools[0]);
+            }
+            return null;
+        }
+    }
+    public void updatePool(Pool pool){
+        new UpdatePoolTask().execute(pool);
+    }
+
 
     public LiveData<List<Card>> getCards() {
         return cards;
