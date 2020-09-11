@@ -99,6 +99,7 @@ public class Pool {
                 s.append("; ").append(cards.get(i));
             }
         }
+
         return s.toString();
     }
 }

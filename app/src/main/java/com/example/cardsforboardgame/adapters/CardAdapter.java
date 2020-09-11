@@ -46,8 +46,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
         notifyDataSetChanged();
     }
 
-    public CardAdapter(List<Card> cards)
-    {
+    public CardAdapter(List<Card> cards) {
+
         this.cards = cards;
     }
 
@@ -96,7 +96,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
                 }
             });
             //checkBox.setChecked(true); просто тестировал че делает этот метод. выставляет значение чкбкса на "отмечено"
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
 
         }
     }

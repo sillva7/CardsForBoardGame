@@ -40,7 +40,6 @@ public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder
 
     public PoolAdapter(List<Pool> pools) {
         this.pools = pools;
-        this.pools = new ArrayList<Pool>();
     }
 
     @NonNull

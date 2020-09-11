@@ -56,18 +56,10 @@ public class AllCardsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String titleOfBtn = "";
-                Log.d("747474", "onClick: "+titleOfBtn);
-
                 for (int i = 0; i < AddNewPool.cards.size(); i++) {
                     titleOfBtn = titleOfBtn + AddNewPool.cards.get(i) + " ";
                 }
                 AddNewPool.addNewBtn.setText(titleOfBtn);
-                Log.d("747474", "onClick1: "+titleOfBtn);
-
-
-                for (int i = 0; i < AddNewPool.cards.size(); i++) {//проверка
-                    Log.d("777", "onClick: " + AddNewPool.cards.get(i));
-                }
                 CardAdapter.checkbox = 0;//отключаем чекбоксы при выходе
 
                 AllCardsActivity.this.finish();

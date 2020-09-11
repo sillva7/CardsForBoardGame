@@ -248,26 +248,36 @@ public class AddNewCardActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        final List<Pool> pools = new ArrayList<>();//ниже блок для того чтобы удалять карточку из Пулов
-                        LiveData<List<Pool>> poolsFromListData = viewModel.getPools();
+                        LiveData<List<Pool>> poolsFromListData = viewModel.getPools();//ниже блок для того чтобы удалять карточку из Пулов
                         poolsFromListData.observe(AddNewCardActivity.this, new Observer<List<Pool>>() {//для вытаскивания списка из LiveData
                             @Override
                             public void onChanged(List<Pool> poolss) {
                                 poolss = new ArrayList<>();
+
                                 for (int i = 0; i < poolss.size(); i++) {
                                     ArrayList<String> cards = poolss.get(i).getCards();
-                                    for (int j = 0; j < cards.size(); j++) {
-                                        Log.d("lololo", "cardsList: " + cards.get(j));
-                                    }
                                     ArrayList<String> cardsForRemove = new ArrayList<>();
                                     for (int j = 0; j < cards.size(); j++) {
                                         if (cards.get(j) == viewModel.getCardById(cardId).getTitle()) {
                                             cardsForRemove.add(cards.get(j));
                                         }
-                                        cards.removeAll(cardsForRemove);
-                                        poolss.get(i).setCards(cards);
-                                        viewModel.updatePool(poolss.get(i));
+                                        //cards.removeAll(cardsForRemove);
+                                        if(cardsForRemove.size()>0){
+                                            for (int k = 0; k < poolss.size(); k++) {
+                                                if(poolss.get(k).getTitle()==cardsForRemove.get(0)){
+
+                                                }else{
+                                                    cards.add(poolss.get(k).getTitle());
+                                                }
+                                            }
+                                            Pool pool = poolss.get(i);
+                                            pool.setCards(cards);
+                                            viewModel.updatePool(pool);
+                                        }
+
                                     }
+
+
                                 }
 
                             }

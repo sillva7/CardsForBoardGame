@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ public class PoolViewActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private CardAdapter cardAdapter;
     private ImageView imagePoolView;
+    Pool pool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +40,27 @@ public class PoolViewActivity extends AppCompatActivity {
         int id = intent.getIntExtra("id", 0);
         Toast.makeText(this, "id is: " + id, Toast.LENGTH_SHORT).show();
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        Pool pool = viewModel.getPoolById(id);
+        pool = viewModel.getPoolById(id);
         title = findViewById(R.id.titlePoolView);
         description = findViewById(R.id.descriptionPoolView);
         ArrayList<String> cardsTitles = pool.getCards();
         ArrayList<Card> cards = new ArrayList<>();
         for (int i = 0; i < cardsTitles.size(); i++) {
-
-            cards.add(viewModel.getCardByTitle(cardsTitles.get(i)));
+            if (viewModel.getCardByTitle(cardsTitles.get(i))==null){
+                Log.d("858585", "onCreate: выскочил нул");
+            }else{
+                cards.add(viewModel.getCardByTitle(cardsTitles.get(i)));
+            }
 
         }
         imagePoolView = findViewById(R.id.imageViewOfPoolView);
         Bitmap bitmap = pool.getBitmap();
         imagePoolView.setImageBitmap(bitmap);
         recyclerView = findViewById(R.id.recyclerViewInPoolViewActivity);
+        Log.d("858585", "onCreate: "+cards.size());
+        for(int i =0; i<cards.size();i++){
+            Log.d("858585", "onCreate: "+cards.get(i));
+        }
 
         cardAdapter = new CardAdapter(cards);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -72,5 +82,32 @@ public class PoolViewActivity extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.deleteCard:
+                deletePool();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deletePool() {
+        viewModel.deletePool(pool);
+        PoolViewActivity.this.finish();
     }
 }
