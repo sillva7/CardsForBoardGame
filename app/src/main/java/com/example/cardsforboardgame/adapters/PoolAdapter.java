@@ -57,7 +57,7 @@ public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder
         TextView description = holder.description;
         image.setImageBitmap(pool.getBitmap());
         title.setText(pool.getTitle());
-        String s = pool.getDescription()+". "+pool.arrayToString(pool.getCards());
+        String s = pool.getDescription();
         description.setText(s);
 
 

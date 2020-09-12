@@ -94,7 +94,7 @@ public class Pool {
     public String arrayToString(ArrayList<String> cards) {
         StringBuilder s = new StringBuilder("" + cards.get(0));
         Log.d("898989", "arrayToString: " + s.toString());
-        if (cards.size() > 1 ) {
+        if (cards.size() > 1) {
             for (int i = 1; i < cards.size(); i++) {
                 s.append("; ").append(cards.get(i));
             }

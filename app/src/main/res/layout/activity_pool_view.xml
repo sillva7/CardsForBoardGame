@@ -50,16 +50,30 @@ android:layout_height="match_parent">
             android:gravity="end"
             android:text="@string/description"
             android:textColor="#000"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            />
 
         <TextView
             android:id="@+id/descriptionPoolView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:textSize="12sp"
+
+            />
     </LinearLayout>
 
+<Button
+    android:id="@+id/randomizer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/descriptionLL"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:text="@string/get_random_card_from_pool"
+    android:onClick="randomize"
+    />
 
 
         <LinearLayout
@@ -67,7 +81,7 @@ android:layout_height="match_parent">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/descriptionLL"
+            app:layout_constraintTop_toBottomOf="@id/randomizer"
             app:layout_constraintStart_toStartOf="parent"
             >
 

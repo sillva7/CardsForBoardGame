@@ -156,13 +156,10 @@ public class AddNewCardActivity extends AppCompatActivity {
     private boolean isEmpty(EditText etText) {
         if (etText.getText().toString().trim().length() > 0)
             return false;
-
         return true;
     }
 
     public void save(View view) {
-
-
         if (isEmpty(titleET)) {
             titleET.setError(getString(R.string.NeedTitle));
             Toast.makeText(this, getString(R.string.NeedTitle), Toast.LENGTH_SHORT).show();
@@ -185,15 +182,9 @@ public class AddNewCardActivity extends AppCompatActivity {
                 Log.d("7856", "save: " + viewModel.getCardById(cardId).getTitle() + " " + viewModel.getCardById(cardId).getDescrption());
                 Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
                 AddNewCardActivity.this.finish();
-
             }
-
         }
-
-
     }
-
-
     public void close(View view) {
         AddNewCardActivity.this.finish();
     }
@@ -202,38 +193,30 @@ public class AddNewCardActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         MenuItem menuItem = menu.findItem(R.id.deleteCard);
-
         if (cardId != 0) {
             menuItem.setVisible(true);
 
         } else {
             menuItem.setVisible(false);
         }
-
         return true;
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-
             case R.id.deleteCard:
                 deleteCard();
                 //AddNewCardActivity.this.finish();
-
                 return true;
 
         }
-
         return super.onOptionsItemSelected(item);
     }
-
     private void deleteCard() {//перед удалением будет появляться окно запрашивающее точно ли хочу удалить?
         final AlertDialog.Builder builder = new AlertDialog.Builder(AddNewCardActivity.this);
         builder.setTitle(R.string.delete);
@@ -253,7 +236,6 @@ public class AddNewCardActivity extends AppCompatActivity {
                             @Override
                             public void onChanged(List<Pool> poolss) {
                                 poolss = new ArrayList<>();
-
                                 for (int i = 0; i < poolss.size(); i++) {
                                     ArrayList<String> cards = poolss.get(i).getCards();
                                     ArrayList<String> cardsForRemove = new ArrayList<>();
@@ -263,36 +245,20 @@ public class AddNewCardActivity extends AppCompatActivity {
                                         }
                                         //cards.removeAll(cardsForRemove);
                                         if(cardsForRemove.size()>0){
-                                            for (int k = 0; k < poolss.size(); k++) {
-                                                if(poolss.get(k).getTitle()==cardsForRemove.get(0)){
-
-                                                }else{
-                                                    cards.add(poolss.get(k).getTitle());
-                                                }
-                                            }
+                                            cards.removeAll(cardsForRemove);
                                             Pool pool = poolss.get(i);
                                             pool.setCards(cards);
                                             viewModel.updatePool(pool);
                                         }
-
                                     }
-
-
                                 }
-
                             }
                         });
-
-
                         viewModel.deleteCard(viewModel.getCardById(cardId));
                         Toast.makeText(AddNewCardActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
                         AddNewCardActivity.this.finish();
-
                     }
                 });
         builder.show();
-
-
     }
-
 }
