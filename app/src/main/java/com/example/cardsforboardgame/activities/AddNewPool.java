@@ -106,12 +106,12 @@ public class AddNewPool extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//для загрузки с галереи изображения
-        super.onActivityResult(requestCode, resultCode, data);//хм...а этот же метод можно было использовать и для выбора Карточек в пул, не так ли?...
+        super.onActivityResult(requestCode, resultCode, data);
 
         //Получаем URI изображения, преобразуем его в Bitmap
         //объект и отображаем в элементе ImageView нашего интерфейса:
         switch (requestCode) {
-            case Pick_image://в принципе, если будет другой кейс, то можно сделать сюда и добавление карточек
+            case Pick_image:
                 if (resultCode == RESULT_OK) {
                     try {
                         final Uri imageUri = data.getData();

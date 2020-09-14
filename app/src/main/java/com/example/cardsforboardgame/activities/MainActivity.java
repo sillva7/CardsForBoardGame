@@ -31,23 +31,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void toAddNewCard(View view) {
-        Intent intent = new Intent(MainActivity.this, AddNewCardActivity.class);
-        startActivity(intent);
-    }
 
-    public void toAddNewPool(View view) {
-        Intent intent = new Intent(MainActivity.this, AddNewPool.class);
-        startActivity(intent);
-    }
 
     public void toAllPools(View view) {
         Intent intent = new Intent(MainActivity.this, AllPoolsActivity.class);
         startActivity(intent);
     }
 
-    public void test(View view) {
-        Intent intent = new Intent(MainActivity.this, Testt.class);
-        startActivity(intent);
-    }
+    
 }

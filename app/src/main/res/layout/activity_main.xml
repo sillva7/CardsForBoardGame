@@ -9,16 +9,6 @@
 
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="108dp"
-        android:onClick="test"
-        android:text="TEst"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/allPools"
         style="@style/TextForBtns"
         android:layout_width="wrap_content"
@@ -41,38 +31,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/addNewPool"
-        android:onClick="toAddNewPool"
-        style="@style/TextForBtns"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        android:text="@string/add_new_pool"
-        app:layout_constraintBottom_toTopOf="@+id/allPools"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/allCardsBtn"
         style="@style/TextForBtns"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_all_cards"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/addNewCard"
-        style="@style/TextForBtns"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        android:onClick="toAddNewCard"
-        android:text="@string/add_new_card"
-        app:layout_constraintBottom_toTopOf="@+id/allCardsBtn"
         app:layout_constraintEnd_toStartOf="@+id/view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

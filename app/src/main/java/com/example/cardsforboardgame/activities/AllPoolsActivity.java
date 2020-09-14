@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.cardsforboardgame.Classes.Card;
@@ -60,6 +61,12 @@ public class AllPoolsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+
+    public void toAddNewPoolFromList(View view) {
+        Intent intent = new Intent(AllPoolsActivity.this, AddNewPool.class);
+        startActivity(intent);
 
     }
 }

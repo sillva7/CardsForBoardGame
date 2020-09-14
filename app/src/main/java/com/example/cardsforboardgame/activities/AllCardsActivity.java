@@ -32,6 +32,8 @@ public class AllCardsActivity extends AppCompatActivity {
     MainViewModel viewModel;
     ArrayList<Card> cards;
     FloatingActionButton saveToPool;
+    FloatingActionButton toAddNewCard;
+
 
 
     @Override
@@ -39,6 +41,7 @@ public class AllCardsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_cards);
         saveToPool = findViewById(R.id.saveToPool);
+        toAddNewCard = findViewById(R.id.addNewCard);
        // final StringBuilder titleOfBtn = new StringBuilder();
         final Intent intent = getIntent();
         final int checkBoxAndBtn = intent.getIntExtra("checkbox", 0);
@@ -47,10 +50,12 @@ public class AllCardsActivity extends AppCompatActivity {
         if (checkBoxAndBtn == 0) {//для отображения чекбокса и на видимость кнопки для сохранения карточек в пул
             CardAdapter.checkbox = 0;
             saveToPool.hide();
+            toAddNewCard.show();
 
         } else {
             CardAdapter.checkbox = 1;
             saveToPool.show();
+            toAddNewCard.hide();
             AddNewPool.cards.clear();
 
         }
@@ -103,5 +108,10 @@ public class AllCardsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void toAddNewCardFromList(View view) {
+        Intent intent = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
+        startActivity(intent);
     }
 }
