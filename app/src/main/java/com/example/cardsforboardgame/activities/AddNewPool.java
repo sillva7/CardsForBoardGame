@@ -2,6 +2,8 @@ package com.example.cardsforboardgame.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -34,6 +36,7 @@ import com.nex3z.flowlayout.FlowLayout;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.cardsforboardgame.R.drawable;
 
@@ -147,11 +150,23 @@ public class AddNewPool extends AppCompatActivity {
     }
 
     public void savePool(View view) {
-
+        LiveData<List<Pool>> poolsFromLiveData = viewModel.getPools();
+        final ArrayList<String> titlesOfPool = new ArrayList<>();
+        poolsFromLiveData.observe(AddNewPool.this, new Observer<List<Pool>>() {
+            @Override
+            public void onChanged(List<Pool> pools) {
+                for (Pool pool : pools) {
+                    titlesOfPool.add(pool.getTitle());
+                }
+            }
+        });
 
         if (isEmpty(titleET)) {
             titleET.setError(getString(R.string.NeedTitle));
             Toast.makeText(this, getString(R.string.NeedTitle), Toast.LENGTH_SHORT).show();
+        } else if (titlesOfPool.contains(titleET.getText().toString())) {
+            titleET.setError(getString(R.string.NeedUniqName));
+            Toast.makeText(this, "Need unique title", Toast.LENGTH_SHORT).show();
         } else if (isEmpty(descriptionET)) {
             descriptionET.setError(getString(R.string.NeedDescription));
             Toast.makeText(this, getString(R.string.NeedDescription), Toast.LENGTH_SHORT).show();

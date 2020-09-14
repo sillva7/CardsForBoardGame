@@ -160,9 +160,24 @@ public class AddNewCardActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
+        //нужна проверка на уникальность имени
+        LiveData<List<Card>> cardsFromLiveData = viewModel.getCards();
+        final ArrayList<String> titlesOfCards = new ArrayList<>();
+        cardsFromLiveData.observe(AddNewCardActivity.this, new Observer<List<Card>>() {
+            @Override
+            public void onChanged(List<Card> cards) {
+                for (Card card : cards) {
+                    titlesOfCards.add(card.getTitle());
+                }
+            }
+        });
+
         if (isEmpty(titleET)) {
             titleET.setError(getString(R.string.NeedTitle));
             Toast.makeText(this, getString(R.string.NeedTitle), Toast.LENGTH_SHORT).show();
+        } else if (titlesOfCards.contains(titleET.getText().toString())) {//проверка на уникальность тайтла
+            titleET.setError(getString(R.string.NeedUniqName));
+            Toast.makeText(this, R.string.NeedUniqName, Toast.LENGTH_SHORT).show();
         } else if (isEmpty(descriptionET)) {
             descriptionET.setError(getString(R.string.NeedDescription));
             Toast.makeText(this, getString(R.string.NeedDescription), Toast.LENGTH_SHORT).show();
@@ -175,7 +190,7 @@ public class AddNewCardActivity extends AppCompatActivity {
                 Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
                 AddNewCardActivity.this.finish();
 
-            } else {
+            } else {//при апдейте карты
                 Log.d("7856", "save: " + viewModel.getCardById(cardId).getTitle() + " " + viewModel.getCardById(cardId).getDescrption());
                 Card card = new Card(cardId, titleET.getText().toString(), descriptionET.getText().toString(), bitmap);
                 viewModel.updateCard(card);
@@ -185,6 +200,7 @@ public class AddNewCardActivity extends AppCompatActivity {
             }
         }
     }
+
     public void close(View view) {
         AddNewCardActivity.this.finish();
     }
@@ -201,11 +217,13 @@ public class AddNewCardActivity extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -217,6 +235,7 @@ public class AddNewCardActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void deleteCard() {//перед удалением будет появляться окно запрашивающее точно ли хочу удалить?
         final AlertDialog.Builder builder = new AlertDialog.Builder(AddNewCardActivity.this);
         builder.setTitle(R.string.delete);
@@ -244,7 +263,7 @@ public class AddNewCardActivity extends AppCompatActivity {
                                             cardsForRemove.add(cards.get(j));
                                         }
                                         //cards.removeAll(cardsForRemove);
-                                        if(cardsForRemove.size()>0){
+                                        if (cardsForRemove.size() > 0) {
                                             cards.removeAll(cardsForRemove);
                                             Pool pool = poolss.get(i);
                                             pool.setCards(cards);

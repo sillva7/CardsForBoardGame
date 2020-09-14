@@ -21,6 +21,7 @@ import com.example.cardsforboardgame.DBStuf.MainViewModel;
 import com.example.cardsforboardgame.R;
 import com.example.cardsforboardgame.Utils.BitmapConverter;
 import com.example.cardsforboardgame.adapters.CardAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,8 @@ public class AllCardsActivity extends AppCompatActivity {
     CardAdapter cardAdapter;
     MainViewModel viewModel;
     ArrayList<Card> cards;
-    Button saveToPool;
+    FloatingActionButton saveToPool;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +46,11 @@ public class AllCardsActivity extends AppCompatActivity {
 
         if (checkBoxAndBtn == 0) {//для отображения чекбокса и на видимость кнопки для сохранения карточек в пул
             CardAdapter.checkbox = 0;
-            saveToPool.setVisibility(View.GONE);
+            saveToPool.hide();
 
         } else {
             CardAdapter.checkbox = 1;
-            saveToPool.setVisibility(View.VISIBLE);
+            saveToPool.show();
             AddNewPool.cards.clear();
 
         }

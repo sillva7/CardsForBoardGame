@@ -39,4 +39,5 @@
     <string name="get_random_card_from_pool">Get random card from pool</string>
     <string name="deleted">Deleted</string>
     <string name="another_one">Another one</string>
+    <string name="NeedUniqName">Need unique title</string>
 </resources>
