@@ -97,13 +97,16 @@ public class AllCardsActivity extends AppCompatActivity {
         cardAdapter.setOnCardClickListener(new CardAdapter.OnCardClickListener() {//по клику переходим на страницу с карточкой и информацией о ней
             @Override
             public void onCardClick(int position) {
-                Card card = cardAdapter.getCards().get(position);
+                if(position==cardAdapter.getCards().size()){
+                    Intent intentForAddNewCardToPool = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
+                    startActivity(intentForAddNewCardToPool);
+                }else{
+                    Card card = cardAdapter.getCards().get(position);
+                    Intent intentForCardEdit = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
+                    intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
+                    startActivity(intentForCardEdit);
+                }
 
-
-                Intent intentForCardEdit = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
-                intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
-                Log.d("494949", "onCardClick: "+viewModel.getCardByTitle(card.getTitle()).getId());
-                startActivity(intentForCardEdit);
 
 
             }

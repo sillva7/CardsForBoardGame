@@ -53,10 +53,11 @@ public class AddNewCardActivity extends AppCompatActivity {
     private final int Pick_image = 1;
     private byte[] byteForImg;
     private MainViewModel viewModel;
-    EditText titleET, descriptionET;
-    ArrayList<Card> cardList;
-    Bitmap bitmap;
-    int cardId;//важная часть, т.к. от неё зависит состояние кнопок по загрузки изображения и кнопки сохранить/обновить
+    private EditText titleET, descriptionET;
+    private ArrayList<Card> cardList;
+    private Bitmap bitmap;
+    private int cardId;//важная часть, т.к. от неё зависит состояние кнопок по загрузки изображения и кнопки сохранить/обновить
+    private int fromPoolId;
 
 
     @Override
@@ -67,6 +68,10 @@ public class AddNewCardActivity extends AppCompatActivity {
         setImgBtn = findViewById(R.id.button);
         save = findViewById(R.id.save);
         imageViewOfCard = findViewById(R.id.imageView);
+
+        fromPoolId = getIntent().getIntExtra("toPoolId",0);
+        Log.d("999000", "save: "+fromPoolId);
+
 
         bitmap = null;
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -187,8 +192,24 @@ public class AddNewCardActivity extends AppCompatActivity {
             if (cardId == 0) {
                 Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), bitmap);
                 viewModel.insertCard(card);
+                if(fromPoolId!=0){
+                    Log.d("999000", "save: "+fromPoolId);
+                    Pool pool = viewModel.getPoolById(fromPoolId);
+                    ArrayList<String> titles = pool.getCards();
+                    titles.add(titleET.getText().toString());
+                    pool.setCards(titles);
+                    viewModel.updatePool(pool);
+                    Intent intent = new Intent(AddNewCardActivity.this, PoolViewActivity.class);
+                    intent.putExtra("id", fromPoolId);
+                    Log.d("999000", "save: "+fromPoolId);
+                    startActivity(intent);
+                }
                 Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
                 AddNewCardActivity.this.finish();
+                Log.d("999000", "save: "+"finished");
+
+
+
 
             } else {//при апдейте карты
                 Log.d("7856", "save: " + viewModel.getCardById(cardId).getTitle() + " " + viewModel.getCardById(cardId).getDescrption());

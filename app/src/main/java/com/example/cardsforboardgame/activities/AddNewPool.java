@@ -82,7 +82,7 @@ public class AddNewPool extends AppCompatActivity {
         startActivity(intent);
 
         //Button myButton = new Button(this);//создаём кнопу. Надо будет поставить какую-нибудь проверку на то, что если карточка не была добавлена, кнопа новая не создавалась
-        //myButton.setText(R.string.add_new_card_to_pool_btn);//устанавливаем ей нужные параметры
+        //myButton.setText(R.string.add_new_card_to_pool_btn);//устанавливаем ей нужные параметрыca
         //myButton.setMinWidth(0);
 //        myButton.setOnClickListener(new View.OnClickListener() {//ставим тригер нажатия на эту кнопу
 //

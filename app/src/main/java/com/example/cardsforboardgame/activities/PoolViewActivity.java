@@ -36,9 +36,9 @@ public class PoolViewActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private CardAdapter cardAdapter;
     private ImageView imagePoolView;
-    Pool pool;
-    ArrayList<Card> cards;
-    View customLayout;
+    private Pool pool;
+    private ArrayList<Card> cards;
+    private View customLayout;
 
 
     @Override
@@ -48,13 +48,13 @@ public class PoolViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
         Toast.makeText(this, "id is: " + id, Toast.LENGTH_SHORT).show();
+
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         pool = viewModel.getPoolById(id);
         title = findViewById(R.id.titlePoolView);
         description = findViewById(R.id.descriptionPoolView);
         ArrayList<String> cardsTitles = pool.getCards();
 
-        Log.d("lololo1", "onCreateBeforeSOrt: " + cardsTitles.size());
         cards = new ArrayList<>();
         for (int i = 0; i < cardsTitles.size(); i++) {
             if (viewModel.getCardByTitle(cardsTitles.get(i)) == null) {
@@ -63,14 +63,12 @@ public class PoolViewActivity extends AppCompatActivity {
                 cards.add(viewModel.getCardByTitle(cardsTitles.get(i)));
             }
         }
-        Log.d("lololo1", "onCreate: "+cards.size());
 
 
         imagePoolView = findViewById(R.id.imageViewOfPoolView);
         Bitmap bitmap = pool.getBitmap();
         imagePoolView.setImageBitmap(bitmap);
         recyclerView = findViewById(R.id.recyclerViewInPoolViewActivity);
-        Log.d("858585", "onCreate: " + cards.size());
         for (int i = 0; i < cards.size(); i++) {
             Log.d("858585", "onCreate: " + cards.get(i));
         }
@@ -85,18 +83,24 @@ public class PoolViewActivity extends AppCompatActivity {
         cardAdapter.setOnCardClickListener(new CardAdapter.OnCardClickListener() {
             @Override
             public void onCardClick(int position) {
-                Card card = cardAdapter.getCards().get(position);
+                if(position==cards.size()){
+                    Intent intentForAddNewCardToPool = new Intent(PoolViewActivity.this, AddNewCardActivity.class);
+                    Toast.makeText(PoolViewActivity.this, ""+position, Toast.LENGTH_SHORT).show();
+                    Log.d("999000", "onCardClick: "+pool.getId());
+                    intentForAddNewCardToPool.putExtra("toPoolId", pool.getId());
+                    startActivity(intentForAddNewCardToPool);
 
+                }else{
+                    Card card = cardAdapter.getCards().get(position);
+                    Toast.makeText(PoolViewActivity.this, ""+position, Toast.LENGTH_SHORT).show();
 
-                Intent intentForCardEdit = new Intent(PoolViewActivity.this, CardViewActivity.class);
-                intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
-                startActivity(intentForCardEdit);
+                    Intent intentForCardEdit = new Intent(PoolViewActivity.this, CardViewActivity.class);
+                    intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
+                    startActivity(intentForCardEdit);
+                }
             }
         });
-
-
     }
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
@@ -143,7 +147,7 @@ public class PoolViewActivity extends AppCompatActivity {
     public void randomize(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(PoolViewActivity.this);
         customLayout = getLayoutInflater().inflate(R.layout.randomize_alert_dialog, null);//TYT
-        builder.setView(customLayout);//********************************************************************и тут подключаем кастомынй лайаут
+        builder.setView(customLayout);//************************************************и тут подключаем кастомынй лайаут
         builder.setTitle("Randomize");
 
         randomizer(customLayout);

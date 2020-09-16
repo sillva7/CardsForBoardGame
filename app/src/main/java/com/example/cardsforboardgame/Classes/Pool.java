@@ -44,7 +44,9 @@ public class Pool {
     }
 
     public ArrayList<String> getCards() {//Будем брать тайтлы карточек из массива и по ним уже брать сами объекты из бд
+
         return cards;
+
     }
 
     public void setCards(ArrayList<String> cards) {
