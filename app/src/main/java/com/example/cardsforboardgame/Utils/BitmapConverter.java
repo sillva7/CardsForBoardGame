@@ -17,33 +17,40 @@ public class BitmapConverter {
     // из bitmap в byte[]
     @TypeConverter
     public static byte[] getBytes(Bitmap bitmap) {
-        Bitmap bmp = bitmap;
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        bmp.recycle();
-        return byteArray;
+        try {
+            Bitmap bmp = bitmap;
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            bmp.recycle();
+            return byteArray;
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     // из byte[] в bitmap. Потому что просто битмап с картинки не достаётся
     @TypeConverter
     public static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
+        try{
+            return BitmapFactory.decodeByteArray(image, 0, image.length);
+        }catch (NullPointerException e){
+            return null;
+        }
     }
 
 
-
-    public static Bitmap drawableToBitmap (Drawable drawable) {//Конвертация дровбл в битмап, нашёл на стоке
+    public static Bitmap drawableToBitmap(Drawable drawable) {//Конвертация дровбл в битмап, нашёл на стоке
         Bitmap bitmap = null;
 
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if(bitmapDrawable.getBitmap() != null) {
+            if (bitmapDrawable.getBitmap() != null) {
                 return bitmapDrawable.getBitmap();
             }
         }
 
-        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
             bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
         } else {
             bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);

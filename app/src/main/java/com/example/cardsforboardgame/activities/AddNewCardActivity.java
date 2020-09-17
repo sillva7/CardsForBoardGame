@@ -68,6 +68,7 @@ public class AddNewCardActivity extends AppCompatActivity {
         setImgBtn = findViewById(R.id.button);
         save = findViewById(R.id.save);
         imageViewOfCard = findViewById(R.id.imageView);
+        imageViewOfCard.setBackground(getDrawable(R.drawable.ic_launcher_background));
 
         fromPoolId = getIntent().getIntExtra("toPoolId",0);
         Log.d("999000", "save: "+fromPoolId);
@@ -123,12 +124,11 @@ public class AddNewCardActivity extends AppCompatActivity {
                         String s = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
                         bitmap = selectedImage;
-
-                        imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение
-                        //imageViewOfCard.setImageURI(imageUri);//изображение загружается из памяти телефона
+                        //imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение
+                        imageViewOfCard.setImageURI(imageUri);//изображение загружается из памяти телефона
                         setImgBtn.setText(s);
+
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -137,12 +137,11 @@ public class AddNewCardActivity extends AppCompatActivity {
     }
 
 
-    public String getRealPathFromURI(Uri uri) {//для настоящего названия пути картинки
+    public String getRealPathFromURI(Uri uri) {//для понятного названия пути картинки
         String[] projection = {MediaStore.Images.Media.DATA};
         @SuppressWarnings("deprecation")
         Cursor cursor = managedQuery(uri, projection, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }

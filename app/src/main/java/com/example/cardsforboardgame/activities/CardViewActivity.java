@@ -38,9 +38,13 @@ public class CardViewActivity extends AppCompatActivity {
         Log.d("494949", "onCreate: " + id);
         card = viewModel.getCardById(id);
         Log.d("494949", "onCreate: " + card.getTitle());
-        imageViewInCardView.setImageBitmap(card.getBitmap());
         description.setText(card.getDescrption());
         title.setText(card.getTitle());
+        try{
+            imageViewInCardView.setImageBitmap(card.getBitmap());
+        }catch (NullPointerException e){
+
+        }
     }
 
 

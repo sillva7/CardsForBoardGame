@@ -15,7 +15,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
+        >
         <activity android:name=".activities.AllPoolsActivity"></activity>
         <activity android:name=".activities.PoolViewActivity" />
         <activity android:name=".activities.CardViewActivity" />

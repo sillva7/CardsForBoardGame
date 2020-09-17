@@ -35,6 +35,8 @@ public class Card {
         this.descrption = descrption;
     }
 
+
+
     @Ignore
     public Card(String title, String descrption, Bitmap bitmap) {
         this.title = title;
