@@ -125,8 +125,8 @@ public class AddNewCardActivity extends AppCompatActivity {
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         bitmap = selectedImage;
-                        //imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение
-                        imageViewOfCard.setImageURI(imageUri);//изображение загружается из памяти телефона
+                        imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение
+                        //imageViewOfCard.setImageURI(imageUri);//изображение загружается из памяти телефона
                         setImgBtn.setText(s);
 
                     } catch (FileNotFoundException e) {
