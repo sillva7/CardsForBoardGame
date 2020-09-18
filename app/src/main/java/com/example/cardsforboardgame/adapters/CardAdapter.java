@@ -1,5 +1,6 @@
 package com.example.cardsforboardgame.adapters;
 
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,7 +94,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
                 TextView textView = holder.textView;
                 final CheckBox checkBox = holder.checkBox;
                 checkBox.setChecked(card.isChecked());//отметка для установки чекбокса
-                imageView.setImageBitmap(card.getBitmap());
+                imageView.setImageBitmap(BitmapFactory.decodeFile(card.getPathToFile()));
                 textView.setText(card.getTitle());
                 if (checkbox == 0) {
                     checkBox.setVisibility(View.GONE);

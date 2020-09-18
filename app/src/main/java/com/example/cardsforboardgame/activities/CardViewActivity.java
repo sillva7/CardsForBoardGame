@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,7 +42,7 @@ public class CardViewActivity extends AppCompatActivity {
         description.setText(card.getDescrption());
         title.setText(card.getTitle());
         try{
-            imageViewInCardView.setImageBitmap(card.getBitmap());
+            imageViewInCardView.setImageBitmap(BitmapFactory.decodeFile(card.getPathToFile()));
         }catch (NullPointerException e){
 
         }

@@ -16,6 +16,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:background="@drawable/border"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,11 +31,14 @@
             android:maxWidth="100dp"
             android:text="TEST"
             android:textColor="#000"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/imageViewCard"
             app:layout_constraintStart_toStartOf="@+id/imageViewCard"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewCard" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.7"
+            />
 
         <CheckBox
             android:id="@+id/checkBox"

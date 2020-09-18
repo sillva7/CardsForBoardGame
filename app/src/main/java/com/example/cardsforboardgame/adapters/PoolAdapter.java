@@ -1,5 +1,6 @@
 package com.example.cardsforboardgame.adapters;
 
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder
         ImageView image = holder.image;
         TextView title = holder.title;
         TextView description = holder.description;
-        image.setImageBitmap(pool.getBitmap());
+        image.setImageBitmap(BitmapFactory.decodeFile(pool.getPathToFile()));
         title.setText(pool.getTitle());
         String s = pool.getDescription();
         description.setText(s);

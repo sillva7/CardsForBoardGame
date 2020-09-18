@@ -24,8 +24,7 @@ public class Pool {
     @TypeConverters({CardConverter.class})
     ArrayList<String> cards;
 
-    @TypeConverters({BitmapConverter.class})
-    Bitmap bitmap;//for img
+    String pathToFile;
 
     public String getTitle() {
         return title;
@@ -54,13 +53,6 @@ public class Pool {
 
     }
 
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
-
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
 
     public int getId() {
         return id;
@@ -70,26 +62,50 @@ public class Pool {
         this.id = id;
     }
 
-    public Pool(int id, String title, String description, ArrayList<String> cards, Bitmap bitmap) {
+    public String getPathToFile() {
+        return pathToFile;
+    }
+
+    public void setPathToFile(String pathToFile) {
+        this.pathToFile = pathToFile;
+    }
+
+    public Pool(int id, String title, String description, ArrayList<String> cards, String pathToFile) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.cards = cards;
-        this.bitmap = bitmap;
+        this.pathToFile = pathToFile;
+    }
+
+    public Pool() {
     }
 
     @Ignore
-    public Pool(String title, String description, ArrayList<String> cards, Bitmap bitmap) {
+    public Pool(String title, String description, String pathToFile) {
         this.title = title;
         this.description = description;
-        this.cards = cards;
-        this.bitmap = bitmap;
+        this.pathToFile = pathToFile;
     }
 
-    @Ignore//опционально можно будет добавлять или нет картинку к пулу
+    @Ignore
     public Pool(String title, String description, ArrayList<String> cards) {
         this.title = title;
         this.description = description;
+        this.cards = cards;
+    }
+
+    @Ignore
+    public Pool(String title, String description, ArrayList<String> cards, String pathToFile) {
+        this.title = title;
+        this.description = description;
+        this.cards = cards;
+        this.pathToFile = pathToFile;
+    }
+
+    @Ignore
+    public Pool(String title, ArrayList<String> cards) {
+        this.title = title;
         this.cards = cards;
     }
 

@@ -6,39 +6,28 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cardsforboardgame.Classes.Card;
 import com.example.cardsforboardgame.Classes.Pool;
 import com.example.cardsforboardgame.DBStuf.MainViewModel;
 import com.example.cardsforboardgame.R;
-import com.example.cardsforboardgame.Testt;
-import com.example.cardsforboardgame.Utils.BitmapConverter;
-import com.example.cardsforboardgame.adapters.CardAdapter;
 import com.nex3z.flowlayout.FlowLayout;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.cardsforboardgame.R.drawable;
 
 
 public class AddNewPool extends AppCompatActivity {
@@ -48,6 +37,7 @@ public class AddNewPool extends AppCompatActivity {
     public static ArrayList<String> cards;//будем помещать карточки сюда и вставлять весь список в объект Pool
     private final int Pick_image = 1;
     Bitmap bitmap;
+    String pathToImage;
     ImageView imageViewOfCard;
     Button setImg;
     MainViewModel viewModel;
@@ -80,22 +70,16 @@ public class AddNewPool extends AppCompatActivity {
         Intent intent = new Intent(AddNewPool.this, AllCardsActivity.class);//call another activity
         intent.putExtra("checkbox", 1);
         startActivity(intent);
-
         //Button myButton = new Button(this);//создаём кнопу. Надо будет поставить какую-нибудь проверку на то, что если карточка не была добавлена, кнопа новая не создавалась
         //myButton.setText(R.string.add_new_card_to_pool_btn);//устанавливаем ей нужные параметрыca
         //myButton.setMinWidth(0);
-//        myButton.setOnClickListener(new View.OnClickListener() {//ставим тригер нажатия на эту кнопу
-//
+//        myButton.setOnClickListener(new View.OnClickListener() {//ставим тригер нажатия на эту кнопу//
 //            @Override
 //            public void onClick(View view) {
-//                addBtn();//рекурсия для кнопы
-//
+//                addBtn();//рекурсия для кнопы//
 //            }
 //        });
-
-
         //flowLayoutBtns.addView(myButton);//добавляем кнопку в наш лайаут
-
     }
 
     public void setImg(View view) {
@@ -113,20 +97,17 @@ public class AddNewPool extends AppCompatActivity {
         switch (requestCode) {
             case Pick_image:
                 if (resultCode == RESULT_OK) {
-                    try {
-                        final Uri imageUri = data.getData();
-                        String s = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                        bitmap = selectedImage;
-
-                        imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение
-                        //imageViewOfCard.setImageURI(imageUri);//изображение загружается из памяти телефона
-                        setImg.setText(s);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                    final Uri imageUri = data.getData();
+                    pathToImage = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
+                    File imgFile = new File(pathToImage);
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        imageViewOfCard.setImageBitmap(myBitmap);
+                        setImg.setText(pathToImage);
                     }
+
+
                 }
         }
     }
@@ -145,7 +126,6 @@ public class AddNewPool extends AppCompatActivity {
         if (etText.getText().toString().trim().length() > 0) {
             return false;
         }
-
         return true;
     }
 
@@ -167,21 +147,19 @@ public class AddNewPool extends AppCompatActivity {
         } else if (titlesOfPool.contains(titleET.getText().toString())) {
             titleET.setError(getString(R.string.NeedUniqName));
             Toast.makeText(this, "Need unique title", Toast.LENGTH_SHORT).show();
-        } else if (isEmpty(descriptionET)) {
-            descriptionET.setError(getString(R.string.NeedDescription));
-            Toast.makeText(this, getString(R.string.NeedDescription), Toast.LENGTH_SHORT).show();
+//        } else if (isEmpty(descriptionET)) {
+//            descriptionET.setError(getString(R.string.NeedDescription));
+//            Toast.makeText(this, getString(R.string.NeedDescription), Toast.LENGTH_SHORT).show();
         } else if (cards.isEmpty()) {
             Toast.makeText(this, R.string.EmptyListOfCard, Toast.LENGTH_SHORT).show();
             addNewBtn.setError(getString(R.string.needCards));
-        } else if (bitmap == null) {
-            Toast.makeText(this, R.string.choose_picture, Toast.LENGTH_SHORT).show();
+//        } else if (pathToImage == null) {
+//            Toast.makeText(this, R.string.choose_picture, Toast.LENGTH_SHORT).show();
         } else {
             Pool pool;
-
             //pool = new Pool(titleET.getText().toString(), descriptionET.getText().toString(), cards);//добавим в будущем
 
-            pool = new Pool(titleET.getText().toString(), descriptionET.getText().toString(), cards, bitmap);
-
+            pool = new Pool(titleET.getText().toString(), descriptionET.getText().toString(), cards, pathToImage);
 
             viewModel.insertPool(pool);
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();

@@ -16,9 +16,11 @@
             android:id="@+id/imageViewPool"
             android:layout_width="140dp"
             android:layout_height="180dp"
-            android:src="@drawable/ic_launcher_background"
+            android:adjustViewBounds="true"
+            android:background="@drawable/border"
+            android:cropToPadding="true"
             android:scaleType="centerCrop"
-
+            android:src="@drawable/ic_launcher_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

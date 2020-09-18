@@ -33,6 +33,7 @@ public interface PoolDao {
     void deletePool(Pool pool);
 
     @Update
+
     void updatePool(Pool pool);
 
 }

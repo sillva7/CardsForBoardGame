@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +67,7 @@ public class PoolViewActivity extends AppCompatActivity {
 
 
         imagePoolView = findViewById(R.id.imageViewOfPoolView);
-        Bitmap bitmap = pool.getBitmap();
+        Bitmap bitmap = BitmapFactory.decodeFile(pool.getPathToFile());
         imagePoolView.setImageBitmap(bitmap);
         recyclerView = findViewById(R.id.recyclerViewInPoolViewActivity);
         for (int i = 0; i < cards.size(); i++) {
@@ -94,7 +95,7 @@ public class PoolViewActivity extends AppCompatActivity {
                     Card card = cardAdapter.getCards().get(position);
                     Toast.makeText(PoolViewActivity.this, ""+position, Toast.LENGTH_SHORT).show();
 
-                    Intent intentForCardEdit = new Intent(PoolViewActivity.this, CardViewActivity.class);
+                    Intent intentForCardEdit = new Intent(PoolViewActivity.this, AddNewCardActivity.class);
                     intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
                     startActivity(intentForCardEdit);
                 }
@@ -176,7 +177,7 @@ public class PoolViewActivity extends AppCompatActivity {
 
         titleTV.setText(card.getTitle());//ставим значения
         descriptionTV.setText(card.getDescrption());
-        iv.setImageBitmap(card.getBitmap());
+        iv.setImageBitmap(BitmapFactory.decodeFile(card.getPathToFile()));
     }
 
 
