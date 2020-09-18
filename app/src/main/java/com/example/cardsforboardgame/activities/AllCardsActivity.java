@@ -3,25 +3,20 @@ package com.example.cardsforboardgame.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.cardsforboardgame.Classes.Card;
 import com.example.cardsforboardgame.DBStuf.MainViewModel;
 import com.example.cardsforboardgame.R;
-import com.example.cardsforboardgame.Utils.BitmapConverter;
 import com.example.cardsforboardgame.adapters.CardAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +26,8 @@ public class AllCardsActivity extends AppCompatActivity {
     CardAdapter cardAdapter;
     MainViewModel viewModel;
     ArrayList<Card> cards;
-    FloatingActionButton saveToPool;
-    FloatingActionButton toAddNewCard;
+    //    FloatingActionButton saveToPool;
+//    FloatingActionButton toAddNewCard;
 
 
 
@@ -40,39 +35,32 @@ public class AllCardsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_cards);
-        saveToPool = findViewById(R.id.saveToPool);
-        toAddNewCard = findViewById(R.id.addNewCard);
-       // final StringBuilder titleOfBtn = new StringBuilder();
-        final Intent intent = getIntent();
-        final int checkBoxAndBtn = intent.getIntExtra("checkbox", 0);
+        //saveToPool = findViewById(R.id.saveToPool);
+        //toAddNewCard = findViewById(R.id.addNewCard);
+        // final StringBuilder titleOfBtn = new StringBuilder();
 
+        Intent intent = getIntent();
+        final int checkBoxAndBtn = intent.getIntExtra("checkbox", 0);
 
         if (checkBoxAndBtn == 0) {//для отображения чекбокса и на видимость кнопки для сохранения карточек в пул
             CardAdapter.checkbox = 0;
-            saveToPool.hide();
-            toAddNewCard.show();
+            //saveToPool.hide();
+//            toAddNewCard.show();
 
         } else {
             CardAdapter.checkbox = 1;
-            saveToPool.show();
-            toAddNewCard.hide();
+            //saveToPool.show();
+            //toAddNewCard.hide();
             AddNewPool.cards.clear();
 
         }
-        saveToPool.setOnClickListener(new View.OnClickListener() {//сохранение в пул по нажатию этой кнопки
-            @Override
-            public void onClick(View view) {
-                String titleOfBtn = "";
-                for (int i = 0; i < AddNewPool.cards.size(); i++) {
-                    titleOfBtn = titleOfBtn + AddNewPool.cards.get(i) + " ";
-                }
-                AddNewPool.addNewBtn.setText(titleOfBtn);
-                CardAdapter.checkbox = 0;//отключаем чекбоксы при выходе
-
-                AllCardsActivity.this.finish();
-
-            }
-        });
+//        saveToPool.setOnClickListener(new View.OnClickListener() {//сохранение в пул по нажатию этой кнопки
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//            }
+//        });
 
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -97,10 +85,10 @@ public class AllCardsActivity extends AppCompatActivity {
         cardAdapter.setOnCardClickListener(new CardAdapter.OnCardClickListener() {//по клику переходим на страницу с карточкой и информацией о ней
             @Override
             public void onCardClick(int position) {
-                if(position==cardAdapter.getCards().size()){
+                if (position == cardAdapter.getCards().size()) {
                     Intent intentForAddNewCardToPool = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
                     startActivity(intentForAddNewCardToPool);
-                }else{
+                } else {
                     Card card = cardAdapter.getCards().get(position);
                     Intent intentForCardEdit = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
                     intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
@@ -108,13 +96,50 @@ public class AllCardsActivity extends AppCompatActivity {
                 }
 
 
-
             }
         });
     }
 
     public void toAddNewCardFromList(View view) {
-        Intent intent = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
-        startActivity(intent);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_menu_and_save, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add:
+                Intent intent = new Intent(AllCardsActivity.this, AddNewCardActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.done:
+                String titleOfBtn = "";
+                for (int i = 0; i < AddNewPool.cards.size(); i++) {
+                    titleOfBtn = titleOfBtn + AddNewPool.cards.get(i) + " ";
+                }
+                AddNewPool.addNewBtn.setText(titleOfBtn);
+                CardAdapter.checkbox = 0;//отключаем чекбоксы при выходе
+                AllCardsActivity.this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem add = menu.findItem(R.id.add);
+        MenuItem done = menu.findItem(R.id.done);c
+        if (CardAdapter.checkbox ==0){
+            done.setVisible(false);
+        }else{
+            done.setVisible(true);
+        }
+            return super.onPrepareOptionsMenu(menu);
     }
 }

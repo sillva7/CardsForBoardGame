@@ -117,8 +117,6 @@ public class AddNewCardActivity extends AppCompatActivity {
                         bitmap = selectedImage;
                         imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение*/
 
-
-
                         //ниже будем загружать картинку во второй ИВ просто для теста, чтобы найти
                         //как загрузить карт имея только путь до неё:
                         //УПД: оставлю этот способ
@@ -130,8 +128,6 @@ public class AddNewCardActivity extends AppCompatActivity {
                         }else{
                             Toast.makeText(this, R.string.thisfiledoesntexist, Toast.LENGTH_SHORT).show();
                         }
-
-
                 }
         }
     }
@@ -145,7 +141,6 @@ public class AddNewCardActivity extends AppCompatActivity {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
-
 //    private boolean hasImage(@NonNull ImageView view) {
 //        Drawable drawable = view.getDrawable();
 //        boolean hasImage = (drawable != null);
@@ -237,7 +232,7 @@ public class AddNewCardActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit_menu, menu);
+        getMenuInflater().inflate(R.menu.delete_menu, menu);
         return true;
     }
 

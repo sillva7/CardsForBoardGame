@@ -14,23 +14,24 @@
         android:background="@color/darkGrey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNewPool"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:backgroundTint="@android:color/white"
+
         android:clickable="true"
+        android:onClick="toAddNewPoolFromList"
+        android:scaleType="center"
         android:src="@drawable/ic_baseline_add_24"
         android:text="@string/save_to_pool"
+        app:backgroundTint="#5900FF"
         app:fabCustomSize="60dp"
-        app:maxImageSize="45dp"
-        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9"
-        android:onClick="toAddNewPoolFromList"
-        />
+        app:maxImageSize="45dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
