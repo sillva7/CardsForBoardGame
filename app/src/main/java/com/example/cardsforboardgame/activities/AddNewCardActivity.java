@@ -46,6 +46,7 @@ public class AddNewCardActivity extends AppCompatActivity {
     private int cardId;//важная часть, т.к. от неё зависит состояние кнопок по загрузки изображения и кнопки сохранить/обновить
     private int fromPoolId;
     private String pathToImage;
+    Uri imageUri;
 
 
     @Override
@@ -59,8 +60,8 @@ public class AddNewCardActivity extends AppCompatActivity {
         testIV = findViewById(R.id.imageView2);
         imageViewOfCard.setBackground(getDrawable(R.drawable.ic_launcher_background));
 
-        fromPoolId = getIntent().getIntExtra("toPoolId",0);
-        Log.d("999000", "save: "+fromPoolId);
+        fromPoolId = getIntent().getIntExtra("toPoolId", 0);
+        Log.d("999000", "save: " + fromPoolId);
 
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -83,12 +84,11 @@ public class AddNewCardActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.CreateNewCard, Toast.LENGTH_SHORT).show();
             setImgBtn.setVisibility(View.VISIBLE);
         } else {
-            pathToImage = viewModel.getCardById(cardId).getPathToFile();
-            bitmap = BitmapFactory.decodeFile(pathToImage);
+
             save.setText(R.string.Update);
             titleET.setText(viewModel.getCardById(cardId).getTitle());
             descriptionET.setText(viewModel.getCardById(cardId).getDescrption());
-            imageViewOfCard.setImageBitmap(bitmap);
+            imageViewOfCard.setImageURI(Uri.parse(viewModel.getCardById(cardId).getPathToFile()));
         }
     }
 
@@ -109,25 +109,25 @@ public class AddNewCardActivity extends AppCompatActivity {
             case Pick_image:
                 if (resultCode == RESULT_OK) {
 
-                        final Uri imageUri = data.getData();
-                        pathToImage = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
-                        //Ниже представлен код, которым пользовался изначально. Ничгео плохого, но я понимаю его хуже чем часть снизу. Но оставлю на всякий
+                    imageUri = data.getData();
+                    pathToImage = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
+                    //Ниже представлен код, которым пользовался изначально. Ничгео плохого, но я понимаю его хуже чем часть снизу. Но оставлю на всякий
                         /*final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         bitmap = selectedImage;
                         imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение*/
 
-                        //ниже будем загружать картинку во второй ИВ просто для теста, чтобы найти
-                        //как загрузить карт имея только путь до неё:
-                        //УПД: оставлю этот способ
-                        File imgFile = new  File(pathToImage);
-                        if(imgFile.exists()){
-                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            imageViewOfCard.setImageBitmap(myBitmap);
-                            setImgBtn.setText(pathToImage);
-                        }else{
-                            Toast.makeText(this, R.string.thisfiledoesntexist, Toast.LENGTH_SHORT).show();
-                        }
+                    //ниже будем загружать картинку во второй ИВ просто для теста, чтобы найти
+                    //как загрузить карт имея только путь до неё:
+                    //УПД: оставлю этот способ
+//                        File imgFile = new  File(pathToImage);
+//                        if(imgFile.exists()){
+//                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    imageViewOfCard.setImageURI(imageUri);
+                    setImgBtn.setText(pathToImage);
+//                        }else{
+//                            Toast.makeText(this, R.string.thisfiledoesntexist, Toast.LENGTH_SHORT).show();
+//                        }
                 }
         }
     }
@@ -188,8 +188,8 @@ public class AddNewCardActivity extends AppCompatActivity {
             if (cardId == 0) {
                 Card card = new Card(titleET.getText().toString(), descriptionET.getText().toString(), pathToImage);
                 viewModel.insertCard(card);
-                if(fromPoolId!=0){
-                    Log.d("999000", "save: "+fromPoolId);
+                if (fromPoolId != 0) {
+                    Log.d("999000", "save: " + fromPoolId);
                     Pool pool = viewModel.getPoolById(fromPoolId);
                     ArrayList<String> titles = pool.getCards();
                     titles.add(titleET.getText().toString());
@@ -197,12 +197,12 @@ public class AddNewCardActivity extends AppCompatActivity {
                     viewModel.updatePool(pool);
                     Intent intent = new Intent(AddNewCardActivity.this, PoolViewActivity.class);
                     intent.putExtra("id", fromPoolId);
-                    Log.d("999000", "save: "+fromPoolId);
+                    Log.d("999000", "save: " + fromPoolId);
                     startActivity(intent);
                 }
                 Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
                 AddNewCardActivity.this.finish();
-                Log.d("999000", "save: "+"finished");
+                Log.d("999000", "save: " + "finished");
 
             } else {//при апдейте карты
                 Card card = new Card(cardId, titleET.getText().toString(), descriptionET.getText().toString(), pathToImage);

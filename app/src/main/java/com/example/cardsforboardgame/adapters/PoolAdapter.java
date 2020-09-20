@@ -1,6 +1,7 @@
 package com.example.cardsforboardgame.adapters;
 
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder
         ImageView image = holder.image;
         TextView title = holder.title;
         TextView description = holder.description;
-        image.setImageBitmap(BitmapFactory.decodeFile(pool.getPathToFile()));
+        image.setImageURI(Uri.parse(pool.getPathToFile()));//java.lang.SecurityException: Permission Denial: opening provider com.google.a
         title.setText(pool.getTitle());
         String s = pool.getDescription();
         description.setText(s);

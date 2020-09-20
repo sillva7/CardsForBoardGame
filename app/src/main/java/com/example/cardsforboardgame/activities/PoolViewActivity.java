@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -66,8 +67,8 @@ public class PoolViewActivity extends AppCompatActivity {
 
 
         imagePoolView = findViewById(R.id.imageViewOfPoolView);
-        Bitmap bitmap = BitmapFactory.decodeFile(pool.getPathToFile());
-        imagePoolView.setImageBitmap(bitmap);
+        //Bitmap bitmap = BitmapFactory.decodeFile(pool.getPathToFile());
+        imagePoolView.setImageURI(Uri.parse(pool.getPathToFile()));
         recyclerView = findViewById(R.id.recyclerViewInPoolViewActivity);
         for (int i = 0; i < cards.size(); i++) {
             Log.d("858585", "onCreate: " + cards.get(i));
@@ -85,19 +86,22 @@ public class PoolViewActivity extends AppCompatActivity {
             public void onCardClick(int position) {
                 if(position==cards.size()){
                     Intent intentForAddNewCardToPool = new Intent(PoolViewActivity.this, AddNewCardActivity.class);
-                    Toast.makeText(PoolViewActivity.this, ""+position, Toast.LENGTH_SHORT).show();
-                    Log.d("999000", "onCardClick: "+pool.getId());
                     intentForAddNewCardToPool.putExtra("toPoolId", pool.getId());
                     startActivity(intentForAddNewCardToPool);
 
                 }else{
                     Card card = cardAdapter.getCards().get(position);
-                    Toast.makeText(PoolViewActivity.this, ""+position, Toast.LENGTH_SHORT).show();
-
                     Intent intentForCardEdit = new Intent(PoolViewActivity.this, AddNewCardActivity.class);
                     intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
                     startActivity(intentForCardEdit);
                 }
+            }
+        });
+        cardAdapter.setOnLongCardClickListener(new CardAdapter.OnLongCardClickListener() {
+            @Override
+            public void onLongCardClick(int position) {
+                cards.remove(cards.get(position));
+
             }
         });
     }
@@ -147,7 +151,7 @@ public class PoolViewActivity extends AppCompatActivity {
     public void randomize(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(PoolViewActivity.this);
         customLayout = getLayoutInflater().inflate(R.layout.randomize_alert_dialog, null);//TYT
-        builder.setView(customLayout);//************************************************и тут подключаем кастомынй лайаут
+        builder.setView(customLayout);//*******************************************************и тут подключаем кастомынй лайаут
         builder.setTitle("Randomize");
 
         randomizer(customLayout);
@@ -176,7 +180,7 @@ public class PoolViewActivity extends AppCompatActivity {
 
         titleTV.setText(card.getTitle());//ставим значения
         descriptionTV.setText(card.getDescrption());
-        iv.setImageBitmap(BitmapFactory.decodeFile(card.getPathToFile()));
+        iv.setImageURI(Uri.parse(card.getPathToFile()));
     }
 
 

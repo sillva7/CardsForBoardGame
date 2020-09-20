@@ -1,8 +1,13 @@
 package com.example.cardsforboardgame.Classes;
 
+import android.net.Uri;
+
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.cardsforboardgame.Utils.UriConverter;
 
 @Entity(tableName = "cards")
 public class Card {
@@ -11,6 +16,7 @@ public class Card {
     int id;
     String title;
     String descrption;
+
     String pathToFile;
     @Ignore
     boolean isChecked = false;//переменная для мониторинга состояния чекбокса

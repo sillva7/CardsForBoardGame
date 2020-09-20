@@ -134,7 +134,7 @@ public class AllCardsActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem add = menu.findItem(R.id.add);
-        MenuItem done = menu.findItem(R.id.done);c
+        MenuItem done = menu.findItem(R.id.done);
         if (CardAdapter.checkbox ==0){
             done.setVisible(false);
         }else{

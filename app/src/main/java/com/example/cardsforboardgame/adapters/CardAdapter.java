@@ -1,6 +1,7 @@
 package com.example.cardsforboardgame.adapters;
 
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +29,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
 
     private List<Card> cards;
     private OnCardClickListener onCardClickListener;//создаём объект интерфейс
+    private OnLongCardClickListener onLongCardClickListener;
+
+    public void setOnLongCardClickListener(OnLongCardClickListener onLongCardClickListener) {
+        this.onLongCardClickListener = onLongCardClickListener;
+    }
 //    private OnButtonClickListener onButtonClickListener;//for btn at the end
 
     public interface OnCardClickListener {//создаём интерфейс для клика по элементам адаптера
 
         void onCardClick(int position);
+    }
+
+    public interface OnLongCardClickListener{
+        void onLongCardClick(int position);
     }
 
     public void setOnCardClickListener(OnCardClickListener onCardClickListener) {//делаем метод для клика по эелементу
@@ -94,7 +104,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
                 TextView textView = holder.textView;
                 final CheckBox checkBox = holder.checkBox;
                 checkBox.setChecked(card.isChecked());//отметка для установки чекбокса
-                imageView.setImageBitmap(BitmapFactory.decodeFile(card.getPathToFile()));
+                imageView.setImageURI(Uri.parse(card.getPathToFile()));
                 textView.setText(card.getTitle());
                 if (checkbox == 0) {
                     checkBox.setVisibility(View.GONE);
@@ -150,6 +160,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
                     if (onCardClickListener != null) {
                         onCardClickListener.onCardClick(getAdapterPosition());
                     }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {//если что вот так и работает лонг клик
+                @Override
+                public boolean onLongClick(View v) {
+                    if(onLongCardClickListener!=null){
+                        onLongCardClickListener.onLongCardClick(getAdapterPosition());
+                    }
+                    return true;
+
                 }
             });
 

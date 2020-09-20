@@ -21,6 +21,9 @@ import com.example.cardsforboardgame.adapters.CardAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
+
 public class MainActivity extends AppCompatActivity {
 
     Button addNewCard, addNewPool, toAllCards, toAllPools;
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void toAllPools(View view) {
         Intent intent = new Intent(MainActivity.this, AllPoolsActivity.class);
+
         startActivity(intent);
     }
 

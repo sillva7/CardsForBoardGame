@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +42,7 @@ public class AddNewPool extends AppCompatActivity {
     ImageView imageViewOfCard;
     Button setImg;
     MainViewModel viewModel;
+    Uri imageUri;
 
 
     @Override
@@ -55,6 +57,10 @@ public class AddNewPool extends AppCompatActivity {
         setImg = findViewById(R.id.setIMG);
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         cards = new ArrayList<>();
+
+        if (addNewBtn.getText().toString().length() == 0) {
+            addNewBtn.setText(R.string.choose_cards);
+        }
 
         addNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,14 +104,15 @@ public class AddNewPool extends AppCompatActivity {
             case Pick_image:
                 if (resultCode == RESULT_OK) {
 
-                    final Uri imageUri = data.getData();
-                    pathToImage = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
-                    File imgFile = new File(pathToImage);
-                    if (imgFile.exists()) {
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        imageViewOfCard.setImageBitmap(myBitmap);
+                    imageUri = data.getData();
+                    //pathToImage = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
+                    pathToImage = imageUri.toString();//for bitmapfactory
+//                    File imgFile = new File(pathToImage);
+//                    if (imgFile.exists()) {
+//                      Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(),bmOptions);
+                        imageViewOfCard.setImageURI(imageUri);
                         setImg.setText(pathToImage);
-                    }
+                    //}
 
 
                 }

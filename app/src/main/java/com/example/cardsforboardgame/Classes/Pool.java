@@ -1,6 +1,7 @@
 package com.example.cardsforboardgame.Classes;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.room.Entity;
@@ -10,6 +11,7 @@ import androidx.room.TypeConverters;
 
 import com.example.cardsforboardgame.Utils.BitmapConverter;
 import com.example.cardsforboardgame.Utils.CardConverter;
+import com.example.cardsforboardgame.Utils.UriConverter;
 
 import java.util.ArrayList;
 
@@ -24,7 +26,7 @@ public class Pool {
     @TypeConverters({CardConverter.class})
     ArrayList<String> cards;
 
-    String pathToFile;
+    public String pathToFile;
 
     public String getTitle() {
         return title;
