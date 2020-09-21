@@ -180,7 +180,7 @@ public class PoolViewActivity extends AppCompatActivity {
 
         titleTV.setText(card.getTitle());//ставим значения
         descriptionTV.setText(card.getDescrption());
-        iv.setImageURI(Uri.parse(card.getPathToFile()));
+        iv.setImageURI(Uri.parse(card.getPathToImage()));
     }
 
 

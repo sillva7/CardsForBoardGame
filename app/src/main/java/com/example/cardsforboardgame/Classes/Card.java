@@ -1,5 +1,6 @@
 package com.example.cardsforboardgame.Classes;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import androidx.room.Entity;
@@ -7,6 +8,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.example.cardsforboardgame.Utils.BitmapConverter;
 import com.example.cardsforboardgame.Utils.UriConverter;
 
 @Entity(tableName = "cards")
@@ -17,7 +19,7 @@ public class Card {
     String title;
     String descrption;
 
-    String pathToFile;
+    String pathToImage;
     @Ignore
     boolean isChecked = false;//переменная для мониторинга состояния чекбокса
 
@@ -56,26 +58,26 @@ public class Card {
         this.descrption = descrption;
     }
 
-    public String getPathToFile() {
-        return pathToFile;
+    public String getPathToImage() {
+        return pathToImage;
     }
 
-    public void setPathToFile(String pathToFile) {
-        this.pathToFile = pathToFile;
+    public void setPathToImage(String pathToImage) {
+        this.pathToImage = pathToImage;
     }
 
     public Card(int id, String title, String descrption, String fileToPath) {
         this.id = id;
         this.title = title;
         this.descrption = descrption;
-        this.pathToFile = fileToPath;
+        this.pathToImage = fileToPath;
     }
 
     @Ignore
     public Card(String title, String descrption, String fileToPath) {
         this.title = title;
         this.descrption = descrption;
-        this.pathToFile = fileToPath;
+        this.pathToImage = fileToPath;
     }
 
     @Ignore

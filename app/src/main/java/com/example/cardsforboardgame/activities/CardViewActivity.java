@@ -43,7 +43,7 @@ public class CardViewActivity extends AppCompatActivity {
         description.setText(card.getDescrption());
         title.setText(card.getTitle());
         try{
-            imageViewInCardView.setImageURI(Uri.parse(card.getPathToFile()));
+            imageViewInCardView.setImageURI(Uri.parse(card.getPathToImage()));
         }catch (NullPointerException e){
 
         }

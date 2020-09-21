@@ -30,6 +30,8 @@ import com.example.cardsforboardgame.DBStuf.MainViewModel;
 import com.example.cardsforboardgame.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,6 @@ public class AddNewCardActivity extends AppCompatActivity {
     private int cardId;//важная часть, т.к. от неё зависит состояние кнопок по загрузки изображения и кнопки сохранить/обновить
     private int fromPoolId;
     private String pathToImage;
-    Uri imageUri;
 
 
     @Override
@@ -58,7 +59,6 @@ public class AddNewCardActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
         imageViewOfCard = findViewById(R.id.imageView);
         testIV = findViewById(R.id.imageView2);
-        imageViewOfCard.setBackground(getDrawable(R.drawable.ic_launcher_background));
 
         fromPoolId = getIntent().getIntExtra("toPoolId", 0);
         Log.d("999000", "save: " + fromPoolId);
@@ -88,7 +88,7 @@ public class AddNewCardActivity extends AppCompatActivity {
             save.setText(R.string.Update);
             titleET.setText(viewModel.getCardById(cardId).getTitle());
             descriptionET.setText(viewModel.getCardById(cardId).getDescrption());
-            imageViewOfCard.setImageURI(Uri.parse(viewModel.getCardById(cardId).getPathToFile()));
+            imageViewOfCard.setImageURI(Uri.parse(viewModel.getCardById(cardId).getPathToImage()));
         }
     }
 
@@ -108,23 +108,26 @@ public class AddNewCardActivity extends AppCompatActivity {
         switch (requestCode) {
             case Pick_image:
                 if (resultCode == RESULT_OK) {
-
-                    imageUri = data.getData();
-                    pathToImage = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
-                    //Ниже представлен код, которым пользовался изначально. Ничгео плохого, но я понимаю его хуже чем часть снизу. Но оставлю на всякий
-                        /*final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    try {
+                        final Uri imageUri = data.getData();
+                        pathToImage = imageUri.toString();//для настоящего названия пути картинки. Если оставить так, то не будут работать API22
+                        //Ниже представлен код, которым пользовался изначально. Ничгео плохого, но я понимаю его хуже чем часть снизу. Но оставлю на всякий
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         bitmap = selectedImage;
-                        imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение*/
+                        imageViewOfCard.setImageBitmap(selectedImage);//сохраняется изображение прям в приложение
 
-                    //ниже будем загружать картинку во второй ИВ просто для теста, чтобы найти
-                    //как загрузить карт имея только путь до неё:
-                    //УПД: оставлю этот способ
+                        //ниже будем загружать картинку во второй ИВ просто для теста, чтобы найти
+                        //как загрузить карт имея только путь до неё:
+                        //УПД: оставлю этот способ
 //                        File imgFile = new  File(pathToImage);
 //                        if(imgFile.exists()){
 //                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    imageViewOfCard.setImageURI(imageUri);
-                    setImgBtn.setText(pathToImage);
+                        imageViewOfCard.setImageURI(imageUri);
+                        setImgBtn.setText(pathToImage);
+                    }catch(FileNotFoundException e){
+
+                    }
 //                        }else{
 //                            Toast.makeText(this, R.string.thisfiledoesntexist, Toast.LENGTH_SHORT).show();
 //                        }

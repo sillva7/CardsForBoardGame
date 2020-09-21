@@ -106,7 +106,7 @@ public class AddNewPool extends AppCompatActivity {
 
                     imageUri = data.getData();
                     //pathToImage = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
-                    pathToImage = imageUri.toString();//for bitmapfactory
+                    pathToImage = imageUri.toString();
 //                    File imgFile = new File(pathToImage);
 //                    if (imgFile.exists()) {
 //                      Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(),bmOptions);

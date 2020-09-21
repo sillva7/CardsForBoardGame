@@ -99,12 +99,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
                 Button btnAtTheEnd = holder.btnAtTheEnd;
 
             }else{
+
+
                 final Card card = cards.get(position);
                 ImageView imageView = holder.imageView;
                 TextView textView = holder.textView;
                 final CheckBox checkBox = holder.checkBox;
                 checkBox.setChecked(card.isChecked());//отметка для установки чекбокса
-                imageView.setImageURI(Uri.parse(card.getPathToFile()));
+                imageView.setImageURI(Uri.parse(card.getPathToImage()));
                 textView.setText(card.getTitle());
                 if (checkbox == 0) {
                     checkBox.setVisibility(View.GONE);
@@ -131,6 +133,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
 
         }
     }
+
 
     public CardAdapter() {
     }

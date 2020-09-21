@@ -5,36 +5,44 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Base64;
 
 import androidx.room.TypeConverter;
 
 import com.example.cardsforboardgame.Classes.Card;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class BitmapConverter {
     // из bitmap в byte[]
     @TypeConverter
-    public static byte[] getBytes(Bitmap bitmap) {
-        try {
-            Bitmap bmp = bitmap;
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            bmp.recycle();
-            return byteArray;
-        } catch (NullPointerException e) {
+    public static String getBytes(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 40, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        if (temp == null) {
             return null;
-        }
+        } else
+            return temp;
     }
 
     // из byte[] в bitmap. Потому что просто битмап с картинки не достаётся
     @TypeConverter
-    public static Bitmap getImage(byte[] image) {
-        try{
-            return BitmapFactory.decodeByteArray(image, 0, image.length);
-        }catch (NullPointerException e){
+    public static Bitmap getImage(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            if (bitmap == null) {
+                return null;
+            } else {
+                return bitmap;
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
             return null;
         }
     }
