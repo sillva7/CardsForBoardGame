@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -37,7 +38,7 @@ import java.util.List;
 
 public class AddNewCardActivity extends AppCompatActivity {
 
-    private Button setImgBtn, save;
+    private Button setImgBtn, save, close;
     private ImageView imageViewOfCard, testIV;
     private final int Pick_image = 1;
     private byte[] byteForImg;
@@ -48,6 +49,8 @@ public class AddNewCardActivity extends AppCompatActivity {
     private int cardId;//важная часть, т.к. от неё зависит состояние кнопок по загрузки изображения и кнопки сохранить/обновить
     private int fromPoolId;
     private String pathToImage;
+    private View customLayout;
+    int flag = 0;
 
 
     @Override
@@ -59,9 +62,9 @@ public class AddNewCardActivity extends AppCompatActivity {
         save = findViewById(R.id.save);
         imageViewOfCard = findViewById(R.id.imageView);
         testIV = findViewById(R.id.imageView2);
+        close = findViewById(R.id.close);
 
         fromPoolId = getIntent().getIntExtra("toPoolId", 0);
-        Log.d("999000", "save: " + fromPoolId);
 
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -84,17 +87,36 @@ public class AddNewCardActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.CreateNewCard, Toast.LENGTH_SHORT).show();
             setImgBtn.setVisibility(View.VISIBLE);
         } else {
+            save.setVisibility(View.GONE);
+            close.setVisibility(View.GONE);
+            setImgBtn.setVisibility(View.GONE);
+
 
             save.setText(R.string.Update);
             titleET.setText(viewModel.getCardById(cardId).getTitle());
             descriptionET.setText(viewModel.getCardById(cardId).getDescrption());
             imageViewOfCard.setImageURI(Uri.parse(viewModel.getCardById(cardId).getPathToImage()));
         }
+        imageViewOfCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddNewCardActivity.this);
+                customLayout = getLayoutInflater().inflate(R.layout.img_of_card, null);//TYT
+                builder.setView(customLayout);//*******************************************************и тут подключаем кастомынй лайаут
+
+                ImageView iv = customLayout.findViewById(R.id.bigImg);
+                iv.setImageURI(Uri.parse(viewModel.getCardById(cardId).getPathToImage()));
+                iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 
 
     public void setImg(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);////Вызываем стандартную галерею для выбора изображения с помощью Intent.ACTION_PICK
+        Intent photoPickerIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);////Вызываем стандартную галерею для выбора изображения с помощью Intent.ACTION_PICK
         photoPickerIntent.setType("image/*");//Тип получаемых объектов - image
         startActivityForResult(photoPickerIntent, Pick_image);//Запускаем переход с ожиданием обратного результата в виде информации об изображении
     }
@@ -111,6 +133,9 @@ public class AddNewCardActivity extends AppCompatActivity {
                     try {
                         final Uri imageUri = data.getData();
                         pathToImage = imageUri.toString();//для настоящего названия пути картинки. Если оставить так, то не будут работать API22
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                            getContentResolver().takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        }
                         //Ниже представлен код, которым пользовался изначально. Ничгео плохого, но я понимаю его хуже чем часть снизу. Но оставлю на всякий
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
@@ -125,7 +150,7 @@ public class AddNewCardActivity extends AppCompatActivity {
 //                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         imageViewOfCard.setImageURI(imageUri);
                         setImgBtn.setText(pathToImage);
-                    }catch(FileNotFoundException e){
+                    } catch (FileNotFoundException e) {
 
                     }
 //                        }else{
@@ -224,11 +249,14 @@ public class AddNewCardActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         MenuItem menuItem = menu.findItem(R.id.deleteCard);
+        MenuItem menuItem1 = menu.findItem(R.id.edit);
         if (cardId != 0) {
             menuItem.setVisible(true);
+            menuItem1.setVisible(true);
 
         } else {
             menuItem.setVisible(false);
+            menuItem1.setVisible(false);
         }
         return true;
     }
@@ -246,6 +274,21 @@ public class AddNewCardActivity extends AppCompatActivity {
                 deleteCard();
                 //AddNewCardActivity.this.finish();
                 return true;
+            case R.id.edit:
+
+                if (flag == 0) {
+                    setImgBtn.setVisibility(View.VISIBLE);
+                    close.setVisibility(View.VISIBLE);
+                    save.setVisibility(View.VISIBLE);
+                    flag = 1;
+                } else {
+                    setImgBtn.setVisibility(View.GONE);
+                    close.setVisibility(View.GONE);
+                    save.setVisibility(View.GONE);
+                    flag = 0;
+                }
+                return true;
+
 
         }
         return super.onOptionsItemSelected(item);

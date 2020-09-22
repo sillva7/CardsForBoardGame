@@ -6,11 +6,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -32,17 +34,18 @@ import java.util.List;
 
 
 public class AddNewPool extends AppCompatActivity {
-    EditText titleET, descriptionET;
-    FlowLayout flowLayoutBtns;
+    private EditText titleET, descriptionET;
+    private FlowLayout flowLayoutBtns;
     public static Button addNewBtn;//не забыть исправить с помощью того метода что и при галереи использовался мб?
     public static ArrayList<String> cards;//будем помещать карточки сюда и вставлять весь список в объект Pool
     private final int Pick_image = 1;
-    Bitmap bitmap;
-    String pathToImage;
-    ImageView imageViewOfCard;
-    Button setImg;
-    MainViewModel viewModel;
-    Uri imageUri;
+    private Bitmap bitmap;
+    private String pathToImage;
+    private ImageView imageViewOfCard;
+    private Button setImg;
+    private MainViewModel viewModel;
+    private Uri imageUri;
+    private View customLayout;
 
 
     @Override
@@ -68,6 +71,7 @@ public class AddNewPool extends AppCompatActivity {
                 addBtn();
             }
         });
+
     }
 
 
@@ -89,10 +93,13 @@ public class AddNewPool extends AppCompatActivity {
     }
 
     public void setImg(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);////Вызываем стандартную галерею для выбора изображения с помощью Intent.ACTION_PICK
+        Intent photoPickerIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);//Вызываем стандартную галерею для выбора изображения с помощью
+        // ACTION_OPEN_DOCUMENT(ИМенно ACTION_OPEN_DOCUMENT - решает проблемы с SecurityException)
         photoPickerIntent.setType("image/*");//Тип получаемых объектов - image
         startActivityForResult(photoPickerIntent, Pick_image);//Запускаем переход с ожиданием обратного результата в виде информации об изображении
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//для загрузки с галереи изображения
@@ -100,6 +107,7 @@ public class AddNewPool extends AppCompatActivity {
 
         //Получаем URI изображения, преобразуем его в Bitmap
         //объект и отображаем в элементе ImageView нашего интерфейса:
+
         switch (requestCode) {
             case Pick_image:
                 if (resultCode == RESULT_OK) {
@@ -107,6 +115,9 @@ public class AddNewPool extends AppCompatActivity {
                     imageUri = data.getData();
                     //pathToImage = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
                     pathToImage = imageUri.toString();
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {//2 эти строчки чисто для SecurityException
+                        getContentResolver().takePersistableUriPermission (imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION);//SecurityException
+                    }
 //                    File imgFile = new File(pathToImage);
 //                    if (imgFile.exists()) {
 //                      Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(),bmOptions);

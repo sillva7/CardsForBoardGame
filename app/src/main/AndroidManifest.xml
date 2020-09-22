@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="com.google.android.apps.photos.permission.GOOGLE_PHOTOS"/>
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -20,12 +21,20 @@
         android:hardwareAccelerated="false"
         android:largeHeap="true"
         >
-        <activity android:name=".activities.AllPoolsActivity"></activity>
-        <activity android:name=".activities.PoolViewActivity" />
-        <activity android:name=".activities.CardViewActivity" />
-        <activity android:name=".activities.AddNewPool" />
-        <activity android:name=".activities.AllCardsActivity" />
-        <activity android:name=".activities.AddNewCardActivity" />
+        <activity android:name=".activities.AllPoolsActivity"
+            android:label="@string/Allpools">
+
+        </activity>
+        <activity android:name=".activities.PoolViewActivity"
+            android:label="@string/pool"/>
+        <activity android:name=".activities.CardViewActivity"
+            android:label="@string/card"/>
+        <activity android:name=".activities.AddNewPool"
+            android:label="@string/addnewpool"/>
+        <activity android:name=".activities.AllCardsActivity"
+            android:label="@string/allcards"/>
+        <activity android:name=".activities.AddNewCardActivity"
+            android:label="@string/addnewcard"/>
         <activity android:name=".Testt" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>

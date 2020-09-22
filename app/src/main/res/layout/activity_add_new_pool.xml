@@ -27,11 +27,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:maxLines="1"
                 android:text="@string/title"
                 android:textColor="#000"
-                android:textSize="22sp"
-                android:maxLines="1"
-                />
+                android:textSize="22sp" />
 
             <EditText
                 android:id="@+id/etPoolTitle"
@@ -46,7 +45,6 @@
             android:id="@+id/ll2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll1">
@@ -76,7 +74,6 @@
             android:id="@+id/ll3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll2">
@@ -108,7 +105,7 @@
             android:id="@+id/ll4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/savePool"
+            app:layout_constraintBottom_toTopOf="@+id/ll5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/flowLayoutBtns"
             app:layout_constraintVertical_bias="0">
@@ -119,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:maxLines="2"
                 android:onClick="setImg"
                 android:text="@string/choose_picture"
                 android:textColor="#000"
@@ -126,49 +124,52 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-
-                <ImageView
-                    android:id="@+id/imageViewOfCard"
-                    android:layout_width="200dp"
-                    android:layout_height="230dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/setIMG"
-                    android:scaleType="centerCrop" />
-
+            <ImageView
+                android:id="@+id/imageViewOfCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/setIMG" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <Button
-            android:id="@+id/savePool"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:id="@+id/ll5"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="savePool"
-            android:text="@string/save_this_pool"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintHorizontal_bias="0.1"
-            />
+            app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/close"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:onClick="close"
-            android:text="@string/close"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.90"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            <Button
+                android:id="@+id/savePool"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:onClick="savePool"
+                android:text="@string/save_this_pool"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
+            <Button
+                android:id="@+id/close"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:onClick="close"
+                android:text="@string/close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

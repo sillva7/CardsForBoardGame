@@ -10,7 +10,11 @@
         app:showAsAction="always"
         android:title="@string/delete_card"
         android:visible="true"/>
-
+    <item
+        android:id="@+id/edit"
+        android:icon="@drawable/ic_edit_black_24dp"
+        app:showAsAction="always"
+        android:title="Edit"/>
 
 
 </menu>

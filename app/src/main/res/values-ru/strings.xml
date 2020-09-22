@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Карты и колоды</string>
+    <string name="enter_name_of_card">Название</string>
+    <string name="title">Название:</string>
+    <string name="description">Описание:</string>
+    <string name="description_of_card">Описание</string>
+    <string name="save">Сохранить</string>
+    <string name="close">Закрыть</string>
+    <string name="load_image_from_gallery">Загрузить изображение из галлереи</string>
+    <string name="reveal">Раскрыть</string>
+    <string name="add_new_card">Добавить новую карту</string>
+    <string name="show_all_cards">Карты</string>
+    <string name="add_new_pool">Добавить новую колоду</string>
+    <string name="show_all_pools">Колоды</string>
+    <string name="NeedTitle">Необходимо название</string>
+    <string name="NeedDescription">Необходимо описание</string>
+    <string name="ImageIsEmpty">Установите картинку</string>
+    <string name="CreateNewCard">Создать новую карту</string>
+    <string name="add_new_card_to_pool">Добавить новую карту в колоду:</string>
+    <string name="add_new_card_to_pool_btn">Добавить новые карты</string>
+    <string name="save_to_pool">Сохранить в колоду</string>
+    <string name="choose_cards">Выберите карты для вашей колоды</string>
+    <string name="image_of_pool">Изображение для колоды(необязательно):</string>
+    <string name="choose_picture">Выберите картинку</string>
+    <string name="save_this_pool">Сохранить колоду</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="EmptyListOfCard">Добавьте карту в колоду</string>
+    <string name="cards_in_pool">Карты в колоде:</string>
+    <string name="needCards">Необходимы карты</string>
+    <string name="delete_card">Удалить карту</string>
+    <string name="edit_card">Редактировать карту</string>
+    <string name="Update">Обновить</string>
+    <string name="delete_this_card">Удалить эту карту?</string>
+    <string name="yes">Да</string>
+
+    <string name="delete">Удалить</string>
+    <string name="rusure">Вы уверены?</string>
+    <string name="no">Нет</string>
+    <string name="get_random_card_from_pool">Случайная карта из колоды</string>
+    <string name="deleted">Удалено</string>
+    <string name="another_one">Ещё одна</string>
+    <string name="NeedUniqName">Необходимо уникальное имя</string>
+    <string name="thisfiledoesntexist">Такого файла не существует</string>
+
+    <string name="pool">Колода</string>
+    <string name="card">Карта</string>
+    <string name="addnewcard">Добавить новую карту</string>
+    <string name="allcards">Все карты</string>
+    <string name="addnewpool">Добавить новую колоду</string>
+    <string name="home">Дом</string>
+    <string name="Allpools">Все колоды</string>
+    <string name="long_tap_to_delete_card">(зажми чтобы удалить карту)</string>
+
+</resources>

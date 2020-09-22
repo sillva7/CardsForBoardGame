@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CardsForBoardGame</string>
+    <string name="app_name">Cards and pools</string>
     <string name="enter_name_of_card">Title</string>
     <string name="title">Title:</string>
     <string name="description">Description:</string>
@@ -33,7 +33,7 @@
     <string name="delete_this_card">Delete this card?</string>
     <string name="yes">Yes</string>
 
-    <string name="delete">Delete?</string>
+    <string name="delete">Delete</string>
     <string name="rusure">Are you sure?</string>
     <string name="no">No</string>
     <string name="get_random_card_from_pool">Get random card from pool</string>
@@ -41,4 +41,12 @@
     <string name="another_one">Another one</string>
     <string name="NeedUniqName">Need unique title</string>
     <string name="thisfiledoesntexist">This file does not exist</string>
+    <string name="home">Home</string>
+    <string name="Allpools">All pools</string>
+    <string name="pool">Pool</string>
+    <string name="card">Card</string>
+    <string name="addnewcard">Add new card</string>
+    <string name="allcards">All cards</string>
+    <string name="addnewpool">Add new pool</string>
+    <string name="long_tap_to_delete_card">(long tap to delete card)</string>
 </resources>

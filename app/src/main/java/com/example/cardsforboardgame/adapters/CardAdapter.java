@@ -25,6 +25,7 @@ import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHolder> {
 
+
     public static int checkbox = 0;//это чтобы регулировать видимость чебокса, 0 - выключены, вроде как
 
     private List<Card> cards;
@@ -119,11 +120,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewViewHo
                         if (checkBox.isChecked()) {//этот блок с ифом я нашёл вот в это подворотне shorturl.at/efryH ну, вернее идею в целом как отметить это чекбокс
                             checkBox.setChecked(true);
                             AddNewPool.cards.add(card.getTitle());
-                            Log.d("666", "added: " + card.getTitle() + "  ID:  " + card.getId());
                         } else {
                             checkBox.setChecked(false);
                             AddNewPool.cards.remove(card.getTitle());
-                            Log.d("666", "removed: " + card.getTitle());
                         }
                     }
                 });

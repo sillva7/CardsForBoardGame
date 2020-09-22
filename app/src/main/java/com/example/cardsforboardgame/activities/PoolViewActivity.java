@@ -70,9 +70,7 @@ public class PoolViewActivity extends AppCompatActivity {
         //Bitmap bitmap = BitmapFactory.decodeFile(pool.getPathToFile());
         imagePoolView.setImageURI(Uri.parse(pool.getPathToFile()));
         recyclerView = findViewById(R.id.recyclerViewInPoolViewActivity);
-        for (int i = 0; i < cards.size(); i++) {
-            Log.d("858585", "onCreate: " + cards.get(i));
-        }
+
 
         cardAdapter = new CardAdapter(cards);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -84,12 +82,12 @@ public class PoolViewActivity extends AppCompatActivity {
         cardAdapter.setOnCardClickListener(new CardAdapter.OnCardClickListener() {
             @Override
             public void onCardClick(int position) {
-                if(position==cards.size()){
+                if (position == cards.size()) {
                     Intent intentForAddNewCardToPool = new Intent(PoolViewActivity.this, AddNewCardActivity.class);
                     intentForAddNewCardToPool.putExtra("toPoolId", pool.getId());
                     startActivity(intentForAddNewCardToPool);
 
-                }else{
+                } else {
                     Card card = cardAdapter.getCards().get(position);
                     Intent intentForCardEdit = new Intent(PoolViewActivity.this, AddNewCardActivity.class);
                     intentForCardEdit.putExtra("id", viewModel.getCardByTitle(card.getTitle()).getId());
@@ -99,15 +97,49 @@ public class PoolViewActivity extends AppCompatActivity {
         });
         cardAdapter.setOnLongCardClickListener(new CardAdapter.OnLongCardClickListener() {
             @Override
-            public void onLongCardClick(int position) {
-                cards.remove(cards.get(position));
+            public void onLongCardClick(final int position) {
+                if(position==cards.size()){
+                    Toast.makeText(PoolViewActivity.this, "BUTTON", Toast.LENGTH_SHORT).show();
+                }else{
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(PoolViewActivity.this);
+                    builder.setTitle(getResources().getString(R.string.delete) + " " + cards.get(position).getTitle() + "?");
+                    builder.setMessage(R.string.rusure);
+                    builder.setNegativeButton("NO",//негативный ответ на диалоговое окно и там ниже позитивный
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(PoolViewActivity.this, R.string.no, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ArrayList<Card> newCards = cards;
+                            newCards.remove(cards.get(position));
+                            final ArrayList<String> titlesOfNewCards = new ArrayList<>();
+                            for (Card card : newCards) {
+                                titlesOfNewCards.add(card.getTitle());
+                            }
+                            pool.setCards(titlesOfNewCards);
+                            viewModel.updatePool(pool);
+                            cardAdapter.setCards(newCards);
+                            Toast.makeText(PoolViewActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.show();
+                }
+
+
+
 
             }
         });
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        MenuItem item = menu.findItem(R.id.edit);
+        item.setVisible(false);
         return true;
     }
 
@@ -144,7 +176,8 @@ public class PoolViewActivity extends AppCompatActivity {
                 viewModel.deletePool(pool);
                 PoolViewActivity.this.finish();
                 Toast.makeText(PoolViewActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
-            }});
+            }
+        });
         builder.show();
     }
 
@@ -168,8 +201,8 @@ public class PoolViewActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void randomizer(View view){
-        Card card;//блок с генерацией рандомной карты
+    public void randomizer(View view) {
+        final Card card;//блок с генерацией рандомной карты
         Random rand = new Random();//
         int randomGet = rand.nextInt(cards.size());//
         card = cards.get(randomGet);//
@@ -178,12 +211,19 @@ public class PoolViewActivity extends AppCompatActivity {
         TextView descriptionTV = customLayout.findViewById(R.id.alertRandomizeDescriptionTV);
         ImageView iv = customLayout.findViewById(R.id.alertRandomizeIV);
 
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PoolViewActivity.this, AddNewCardActivity.class);
+                intent.putExtra("id", card.getId());
+                startActivity(intent);
+            }
+        });
+
         titleTV.setText(card.getTitle());//ставим значения
         descriptionTV.setText(card.getDescrption());
         iv.setImageURI(Uri.parse(card.getPathToImage()));
     }
-
-
 
 
 }
