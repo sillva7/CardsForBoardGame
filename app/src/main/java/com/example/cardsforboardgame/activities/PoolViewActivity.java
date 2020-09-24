@@ -40,6 +40,7 @@ public class PoolViewActivity extends AppCompatActivity {
     private Pool pool;
     private ArrayList<Card> cards;
     private View customLayout;
+    public static ArrayList<Card> cardsForUpdate = new ArrayList<>();
 
 
     @Override
@@ -48,12 +49,12 @@ public class PoolViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pool_view);
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
-        Toast.makeText(this, "id is: " + id, Toast.LENGTH_SHORT).show();
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         pool = viewModel.getPoolById(id);
         title = findViewById(R.id.titlePoolView);
         description = findViewById(R.id.descriptionPoolView);
+
         ArrayList<String> cardsTitles = pool.getCards();
 
         cards = new ArrayList<>();
@@ -68,7 +69,10 @@ public class PoolViewActivity extends AppCompatActivity {
 
         imagePoolView = findViewById(R.id.imageViewOfPoolView);
         //Bitmap bitmap = BitmapFactory.decodeFile(pool.getPathToFile());
-        imagePoolView.setImageURI(Uri.parse(pool.getPathToFile()));
+        if(pool.getPathToFile()!=null){
+            imagePoolView.setImageURI(Uri.parse(pool.getPathToFile()));
+
+        }
         recyclerView = findViewById(R.id.recyclerViewInPoolViewActivity);
 
 
@@ -83,9 +87,30 @@ public class PoolViewActivity extends AppCompatActivity {
             @Override
             public void onCardClick(int position) {
                 if (position == cards.size()) {
-                    Intent intentForAddNewCardToPool = new Intent(PoolViewActivity.this, AddNewCardActivity.class);
-                    intentForAddNewCardToPool.putExtra("toPoolId", pool.getId());
-                    startActivity(intentForAddNewCardToPool);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(PoolViewActivity.this);
+                    builder.setTitle(R.string.newCards);
+                    builder.setMessage(R.string.existOrNew);
+                    builder.setNegativeButton(R.string.exist,//негативный ответ на диалоговое окно и там ниже позитивный. Уходим в список карт.
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intentForUpdateCardsList = new Intent(PoolViewActivity.this, AllCardsActivity.class);
+                                    intentForUpdateCardsList.putExtra("forUpdatePool", 1);
+                                    intentForUpdateCardsList.putExtra("poolId", pool.getId());
+                                    startActivity(intentForUpdateCardsList);
+                                }
+                            });
+                    builder.setPositiveButton(R.string.makenewcard, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intentForAddNewCardToPool = new Intent(PoolViewActivity.this, AddNewCardActivity.class);
+                            intentForAddNewCardToPool.putExtra("toPoolId", pool.getId());
+                            startActivity(intentForAddNewCardToPool);
+                        }
+                    });
+                    builder.show();
+
+
+
 
                 } else {
                     Card card = cardAdapter.getCards().get(position);
@@ -154,6 +179,13 @@ public class PoolViewActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.deleteCard:
                 deletePool();
+                return true;
+            case R.id.refresh://обновление активити без блинка
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
+                Toast.makeText(this, R.string.refreshed, Toast.LENGTH_SHORT).show();
                 return true;
         }
 

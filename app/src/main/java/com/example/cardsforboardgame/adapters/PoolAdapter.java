@@ -57,7 +57,9 @@ public class PoolAdapter extends RecyclerView.Adapter<PoolAdapter.PoolViewHolder
         ImageView image = holder.image;
         TextView title = holder.title;
         TextView description = holder.description;
-        image.setImageURI(Uri.parse(pool.getPathToFile()));//java.lang.SecurityException: Permission Denial: opening provider com.google.a
+        if(pool.getPathToFile()!=null){
+            image.setImageURI(Uri.parse(pool.getPathToFile()));//java.lang.SecurityException: Permission Denial: opening provider com.google.a
+        }
         title.setText(pool.getTitle());
         String s = pool.getDescription();
         description.setText(s);

@@ -51,4 +51,16 @@
     <string name="Allpools">Все колоды</string>
     <string name="long_tap_to_delete_card">(зажми чтобы удалить карту)</string>
 
+    <string name="galery_or_camera">Галерея или камера?</string>
+    <string name="galery">Галерея</string>
+    <string name="camera">Камера</string>
+
+    <string name="existOrNew">Добавить существующую карты или сделаем новую?</string>
+    <string name="newCards">Новые карты</string>
+    <string name="refresh">Обновить</string>
+    <string name="edit">Редачить</string>
+    <string name="refreshed">Обновлено</string>
+    <string name="exist">Существующую</string>
+    <string name="makenewcard">Сделать новую</string>
+
 </resources>

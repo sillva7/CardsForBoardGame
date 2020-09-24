@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_refresh_black_24dp"
+        app:showAsAction="always"
+        android:title="@string/refresh"/>
     <item
         android:id="@+id/deleteCard"
         android:icon="@drawable/ic_baseline_delete_forever_24"
@@ -14,7 +18,8 @@
         android:id="@+id/edit"
         android:icon="@drawable/ic_edit_black_24dp"
         app:showAsAction="always"
-        android:title="Edit"/>
+        android:title="@string/edit"/>
+
 
 
 </menu>

@@ -22,10 +22,8 @@ public class Pool {
     public int id;
     String title;
     String description;
-
     @TypeConverters({CardConverter.class})
     ArrayList<String> cards;
-
     public String pathToFile;
 
     public String getTitle() {

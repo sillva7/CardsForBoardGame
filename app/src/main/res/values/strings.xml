@@ -49,4 +49,14 @@
     <string name="allcards">All cards</string>
     <string name="addnewpool">Add new pool</string>
     <string name="long_tap_to_delete_card">(long tap to delete card)</string>
+    <string name="galery_or_camera">Gallery or camera?</string>
+    <string name="galery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="existOrNew">Add exist card or make new?</string>
+    <string name="newCards">New cards</string>
+    <string name="refresh">refresh</string>
+    <string name="edit">Edit</string>
+    <string name="refreshed">Refreshed</string>
+    <string name="exist">Exist</string>
+    <string name="makenewcard">Make new card</string>
 </resources>

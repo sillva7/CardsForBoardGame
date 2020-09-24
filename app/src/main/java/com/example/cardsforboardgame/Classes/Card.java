@@ -18,7 +18,6 @@ public class Card {
     int id;
     String title;
     String descrption;
-
     String pathToImage;
     @Ignore
     boolean isChecked = false;//переменная для мониторинга состояния чекбокса

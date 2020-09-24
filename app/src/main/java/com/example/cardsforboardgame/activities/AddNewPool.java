@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.cardsforboardgame.Classes.Card;
 import com.example.cardsforboardgame.Classes.Pool;
 import com.example.cardsforboardgame.DBStuf.MainViewModel;
 import com.example.cardsforboardgame.R;
@@ -100,7 +101,6 @@ public class AddNewPool extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//для загрузки с галереи изображения
         super.onActivityResult(requestCode, resultCode, data);
@@ -116,13 +116,13 @@ public class AddNewPool extends AppCompatActivity {
                     //pathToImage = getRealPathFromURI(imageUri);//для настоящего названия пути картинки
                     pathToImage = imageUri.toString();
                     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {//2 эти строчки чисто для SecurityException
-                        getContentResolver().takePersistableUriPermission (imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION);//SecurityException
+                        getContentResolver().takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);//SecurityException
                     }
 //                    File imgFile = new File(pathToImage);
 //                    if (imgFile.exists()) {
 //                      Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(),bmOptions);
-                        imageViewOfCard.setImageURI(imageUri);
-                        setImg.setText(pathToImage);
+                    imageViewOfCard.setImageURI(imageUri);
+                    setImg.setText(pathToImage);
                     //}
 
 
@@ -139,6 +139,7 @@ public class AddNewPool extends AppCompatActivity {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+
 
     private boolean isEmpty(EditText etText) {
         if (etText.getText().toString().trim().length() > 0) {
@@ -158,6 +159,8 @@ public class AddNewPool extends AppCompatActivity {
                 }
             }
         });
+
+        Log.d("456456", "savePool: " + titlesOfPool.toString());
 
         if (isEmpty(titleET)) {
             titleET.setError(getString(R.string.NeedTitle));
