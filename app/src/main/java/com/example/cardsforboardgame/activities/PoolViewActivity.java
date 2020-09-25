@@ -96,6 +96,7 @@ public class PoolViewActivity extends AppCompatActivity {
                                     Intent intentForUpdateCardsList = new Intent(PoolViewActivity.this, AllCardsActivity.class);
                                     intentForUpdateCardsList.putExtra("forUpdatePool", 1);
                                     intentForUpdateCardsList.putExtra("poolId", pool.getId());
+                                    Toast.makeText(PoolViewActivity.this, R.string.taptochoose, Toast.LENGTH_LONG).show();
                                     startActivity(intentForUpdateCardsList);
                                 }
                             });

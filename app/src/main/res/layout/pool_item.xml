@@ -19,7 +19,7 @@
             android:adjustViewBounds="true"
             android:background="@drawable/border"
             android:cropToPadding="true"
-            android:scaleType="centerCrop"
+            android:scaleType="matrix"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

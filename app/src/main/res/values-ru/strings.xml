@@ -6,7 +6,7 @@
     <string name="description_of_card">Описание</string>
     <string name="save">Сохранить</string>
     <string name="close">Закрыть</string>
-    <string name="load_image_from_gallery">Загрузить изображение из галлереи</string>
+    <string name="load_image_from_gallery">Загрузить изображение</string>
     <string name="reveal">Раскрыть</string>
     <string name="add_new_card">Добавить новую карту</string>
     <string name="show_all_cards">Карты</string>
@@ -62,5 +62,8 @@
     <string name="refreshed">Обновлено</string>
     <string name="exist">Существующую</string>
     <string name="makenewcard">Сделать новую</string>
+
+    <string name="taptochoose">Нажмите на ту карту, которую хотите выбрать</string>
+
 
 </resources>

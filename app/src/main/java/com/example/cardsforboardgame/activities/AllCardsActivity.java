@@ -256,16 +256,18 @@ public class AllCardsActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem add = menu.findItem(R.id.add);
         MenuItem done = menu.findItem(R.id.done);
-        if (CardAdapter.checkbox == 0) {
+        if (CardAdapter.checkbox == 0 && CardAdapter.forUpdatePool == 0) {
             done.setVisible(false);
-        } else {
+        } else if(CardAdapter.checkbox == 0 && CardAdapter.forUpdatePool == 1) {
             done.setVisible(true);
-        }
-        if (CardAdapter.forUpdatePool == 1) {
+        } else if(CardAdapter.checkbox == 1 && CardAdapter.forUpdatePool == 0){
             done.setVisible(true);
-        } else {
+        } else if(CardAdapter.checkbox == 1 && CardAdapter.forUpdatePool == 1){
+            done.setVisible(true);
+        }else{
             done.setVisible(false);
         }
+
         return super.onPrepareOptionsMenu(menu);
     }
 }

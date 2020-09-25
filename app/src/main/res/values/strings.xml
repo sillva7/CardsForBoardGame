@@ -6,7 +6,7 @@
     <string name="description_of_card">Description</string>
     <string name="save">Save</string>
     <string name="close">Close</string>
-    <string name="load_image_from_gallery">Load image from gallery</string>
+    <string name="load_image_from_gallery">Load image</string>
     <string name="reveal">Reveal</string>
     <string name="add_new_card">Add new card</string>
     <string name="show_all_cards">Cards</string>
@@ -59,4 +59,5 @@
     <string name="refreshed">Refreshed</string>
     <string name="exist">Exist</string>
     <string name="makenewcard">Make new card</string>
+    <string name="taptochoose">Tap on card to choose</string>
 </resources>
